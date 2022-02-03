@@ -105,10 +105,10 @@
 				exponent_final_2 <= (others =>'0');
 				round_out <= (others =>'0');
 		else 
-				sum_round <= rounding_amount + mantissa_term;
+				sum_round <= std_logic_vector(unsigned(rounding_amount) + unsigned(mantissa_term));
 				if sum_round_overflow = '1' then
-					sum_round_2 <= shr(sum_round, conv_std_logic_vector('1', 56));
-					exponent_round <= exponent_term + "000000000001";
+					sum_round_2 <= std_logic_vector(SHIFT_RIGHT(unsigned(sum_round), 1));
+					exponent_round <= std_logic_vector(unsigned(exponent_term) + 1);
 				else
 					sum_round_2 <= sum_round;
 					exponent_round <= exponent_term;
