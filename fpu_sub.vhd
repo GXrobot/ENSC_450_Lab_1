@@ -186,10 +186,10 @@ process
 				large_norm_small_denorm <= '0';	
 			end if;
 			small_is_nonzero <= (not small_is_denorm) or or_reduce(mantissa_small);
-			exponent_diff <= std_logic_vector(unsigned(exponent_large) - unsigned(exponent_small) - unsigned(large_norm_small_denorm));
+			exponent_diff <= std_logic_vector(unsigned(exponent_large) - unsigned(exponent_small) - large_norm_small_denorm);
 			minuend <= not large_is_denorm & mantissa_large & "00";
 			subtrahend <= not small_is_denorm & mantissa_small & "00";
-			subtra_shift <= std_logic_vector(shift_right(unsigned(subtrahend),  exponent_diff));
+			subtra_shift <= std_logic_vector(shift_right(unsigned(subtrahend),  to_integer(unsigned(exponent_diff))));
 			if (subtra_fraction_enable = '1') then
 				subtra_shift_3 <= subtra_shift_2;
 			else
@@ -209,10 +209,10 @@ process
 				diffshift_et_55 <= '0';
 			end if;
 			if (diffshift_gt_exponent = '1') then
-				diff_1 <= std_logic_vector(shift_left(unsigned(diff), exponent_large));
+				diff_1 <= std_logic_vector(shift_left(unsigned(diff), to_integer(unsigned(exponent_large))));
 				exponent <= "00000000000";
 			else
-				diff_1 <= std_logic_vector(shift_left(unsigned(diff), diff_shift_2));
+				diff_1 <= std_logic_vector(shift_left(unsigned(diff), to_integer(unsigned(diff_shift_2))));
 				exponent <= std_logic_vector(unsigned(exponent_large) - unsigned(diff_shift_2));
 			end if;
 			if (diffshift_et_55 = '1') then
@@ -221,7 +221,7 @@ process
 				exponent_2 <=  exponent;
 			end if;
 			if (in_norm_out_denorm = '1') then
-				diff_2 <= '0' & std_logic_vector(shift_right(unsigned(diff_1),conv_std_logic_vector('1', 55)));
+				diff_2 <= '0' & std_logic_vector(shift_right(unsigned(diff_1), 1));
 			else
 				diff_2 <= '0' & diff_1;
 			end if;
