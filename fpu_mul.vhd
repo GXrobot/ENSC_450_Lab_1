@@ -223,12 +223,11 @@
 			sum_2 <= std_logic_vector(unsigned(sum_1(35 downto 10)) + unsigned('0' & product_c));
 			sum_3 <= std_logic_vector(unsigned( '0' & sum_2(41 downto 7)) + unsigned(product_h));
 			sum_4 <= std_logic_vector(unsigned( '0' & sum_3) + unsigned(product_f));
-			sum_5 <= std_logic_vector(unsigned('0' & sum_4(36 downto 10)) + unsigned(product_d);
+			sum_5 <= std_logic_vector(unsigned('0' & sum_4(36 downto 10)) + unsigned(product_d));
 			sum_6 <= std_logic_vector(unsigned(sum_5(27 downto 7)) + unsigned('0' & product_i));
 			sum_7 <= std_logic_vector(unsigned(sum_6) + unsigned('0' & product_g));
 			sum_8 <= std_logic_vector(unsigned(sum_7(36 downto 17)) + unsigned(product_j));
-			product <=  sum_8 & sum_7(16 downto 0) & sum_5(6 downto 0) & sum_4(9 downto 0) & sum_2(6 downto 0) &
-						sum_1(9 downto 0) & sum_0(6 downto 0) & product_a(16 downto 0);
+			product <=  sum_8 & sum_7(16 downto 0) & sum_5(6 downto 0) & sum_4(9 downto 0) & sum_2(6 downto 0) & sum_1(9 downto 0) & sum_0(6 downto 0) & product_a(16 downto 0);
 			product_1 <= std_logic_vector(SHIFT_RIGHT(unsigned(product), to_integer(unsigned(exponent_under))));
 			if (exponent_gt_prodshift = '1') then
 				product_5 <= product_3;
