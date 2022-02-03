@@ -258,7 +258,7 @@
 		elsif (enable_reg_1 = '1') then 
 			count_ready <= (others =>'0');
 		elsif (count_busy = '1') then
-			count_ready <= count_ready + "0000001";
+			count_ready <= std_logic_vector(unsigned(count_ready) + unsigned'("0000001"));
 		end if; 
 	end process;
 	
