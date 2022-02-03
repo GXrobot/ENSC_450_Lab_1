@@ -159,15 +159,15 @@ process
 			exponent_diff <= std_logic_vector(unsigned(exponent_large) - unsigned(exponent_small) - unsigned(large_norm_small_denorm));
 			large_add <= '0' & not large_is_denorm & mantissa_large & "00";
 			small_add <= '0' & not small_is_denorm & mantissa_small & "00";
-			small_shift <= std_logic_vector(shift_right(unsigned(small_add), unsigned(exponent_diff)));
+			small_shift <= std_logic_vector(SHIFT_RIGHT(unsigned(small_add), to_integer(unsigned(exponent_diff))));
 			if (small_fraction_enable = '1') then
 				small_shift_3 <= small_shift_2;
 			else
 				small_shift_3 <= small_shift;
 			end if;
-			sum <= std_logic_vector(unsigned(large_add) + unsigned(small_shift_3);
+			sum <= std_logic_vector(unsigned(large_add) + unsigned(small_shift_3));
 			if (sum_overflow = '1') then
-				sum_2 <= shift_right(unsigned(sum), 1);
+				sum_2 <= SHIFT_RIGHT(unsigned(sum), 1);
 			else
 				sum_2 <= sum;
 			end if;
