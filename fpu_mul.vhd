@@ -177,15 +177,14 @@
 			a_is_zero <= not or_reduce(opa(62 downto 0)); 
 			b_is_zero <= not or_reduce(opb(62 downto 0)); 
 			in_zero <= a_is_zero or b_is_zero;
-			exponent_terms <= exponent_a + exponent_b + ( "0000000000" & not a_is_norm) + 
-							("0000000000" & not b_is_norm);
+			exponent_terms <= std_logic_vector(unsigned(exponent_a) + unsigned(exponent_b) + unsigned( "0000000000" & not a_is_norm) + unsigned("0000000000" & not b_is_norm));
 			if (exponent_terms > "001111111101") then
 				exponent_gt_expoffset <= '1';
 			else
 				exponent_gt_expoffset <= '0';
 			end if;
-			exponent_under <= "001111111110" - exponent_terms;
-			exponent_1 <= exponent_terms - "001111111110"; 
+			exponent_under <= std_logic_vector(unsigned("001111111110") - unsigned(exponent_terms));
+			exponent_1 <= std_logic_vector(unsigned(exponent_terms) - unsigned("001111111110")); 
 			if (exponent_gt_expoffset = '1') then
 				exponent_2 <= exponent_1;
 			else
@@ -196,7 +195,7 @@
 			else
 				exponent_gt_prodshift <= '0';
 			end if;
-			exponent_3 <= exponent_2 - product_shift_2;
+			exponent_3 <= std_logic_vector(unsigned(exponent_2) - unsigned(product_shift_2));
 			if (exponent_gt_prodshift = '1') then
 				exponent_4 <= exponent_3;
 			else
@@ -209,28 +208,28 @@
 			end if;
 			mul_a <= a_is_norm & mantissa_a;
 			mul_b <= b_is_norm & mantissa_b;
-			product_a <= mul_a(23 downto 0) * mul_b(16 downto 0);
-			product_b <= mul_a(23 downto 0) * mul_b(33 downto 17);
-			product_c <= mul_a(23 downto 0) * mul_b(50 downto 34);
-			product_d <= mul_a(23 downto 0) * mul_b(52 downto 51);
-			product_e <= mul_a(40 downto 24) * mul_b(16 downto 0);
-			product_f <= mul_a(40 downto 24) * mul_b(33 downto 17);
-			product_g <= mul_a(40 downto 24) * mul_b(52 downto 34);
-			product_h <= mul_a(52 downto 41) * mul_b(16 downto 0);
-			product_i <= mul_a(52 downto 41) * mul_b(33 downto 17);
-			product_j <= mul_a(52 downto 41) * mul_b(52 downto 34);
-			sum_0 <= product_a(40 downto 17) + ( '0' & product_b);
-			sum_1 <= ('0' & sum_0(41 downto 7)) + product_e;
-			sum_2 <= sum_1(35 downto 10) + ('0' & product_c);
-			sum_3 <= ( '0' & sum_2(41 downto 7)) + product_h;
-			sum_4 <= ( '0' & sum_3) + product_f;
-			sum_5 <= ('0' & sum_4(36 downto 10)) + product_d;
-			sum_6 <= sum_5(27 downto 7) + ('0' & product_i);
-			sum_7 <= sum_6 + ('0' & product_g);
-			sum_8 <= sum_7(36 downto 17) + product_j;
+			product_a <= std_logic_vector(unsigned(mul_a(23 downto 0)) * unsigned(mul_b(16 downto 0)));
+			product_b <= std_logic_vector(unsigned(mul_a(23 downto 0)) * unsigned(mul_b(33 downto 17)));
+			product_c <= std_logic_vector(unsigned(mul_a(23 downto 0)) * unsigned(mul_b(50 downto 34)));
+			product_d <= std_logic_vector(unsigned(mul_a(23 downto 0)) * unsigned(mul_b(52 downto 51)));
+			product_e <= std_logic_vector(unsigned(mul_a(40 downto 24)) * unsigned(mul_b(16 downto 0)));
+			product_f <= std_logic_vector(unsigned(mul_a(40 downto 24)) * unsigned(mul_b(33 downto 17)));
+			product_g <= std_logic_vector(unsigned(mul_a(40 downto 24)) * unsigned(mul_b(52 downto 34)));
+			product_h <= std_logic_vector(unsigned(mul_a(52 downto 41)) * unsigned(mul_b(16 downto 0)));
+			product_i <= std_logic_vector(unsigned(mul_a(52 downto 41)) * unsigned(mul_b(33 downto 17)));
+			product_j <= std_logic_vector(unsigned(mul_a(52 downto 41)) * unsigned(mul_b(52 downto 34)));
+			sum_0 <= std_logic_vector(unsigned(product_a(40 downto 17)) + unsigned( '0' & product_b));
+			sum_1 <= std_logic_vector(unsigned('0' & sum_0(41 downto 7)) + unsigned(product_e));
+			sum_2 <= std_logic_vector(unsigned(sum_1(35 downto 10)) + unsigned('0' & product_c));
+			sum_3 <= std_logic_vector(unsigned( '0' & sum_2(41 downto 7)) + unsigned(product_h));
+			sum_4 <= std_logic_vector(unsigned( '0' & sum_3) + unsigned(product_f);
+			sum_5 <= std_logic_vector(unsigned('0' & sum_4(36 downto 10)) + unsigned(product_d);
+			sum_6 <= std_logic_vector(unsigned(sum_5(27 downto 7)) + unsigned('0' & product_i));
+			sum_7 <= std_logic_vector(unsigned(sum_6) + unsigned('0' & product_g));
+			sum_8 <= std_logic_vector(unsigned(sum_7(36 downto 17)) + unsigned(product_j));
 			product <=  sum_8 & sum_7(16 downto 0) & sum_5(6 downto 0) & sum_4(9 downto 0) & sum_2(6 downto 0) &
 						sum_1(9 downto 0) & sum_0(6 downto 0) & product_a(16 downto 0);
-			product_1 <= shr(product, exponent_under);
+			product_1 <= std_logic_vector(SHIFT_RIGHT(unsigned(product), to_integer(unsigned(exponent_under))));
 			if (exponent_gt_prodshift = '1') then
 				product_5 <= product_3;
 			else
@@ -241,15 +240,15 @@
 			else
 				product_2 <= product_1;
 			end if;
-			product_3 <= shl(product_2, product_shift_2);
-			product_4 <= shl(product_2, exponent_2);
+			product_3 <= std_logic_vector(SHIFT_LEFT(unsigned(product_2), to_integer(unsigned(product_shift_2))));
+			product_4 <= std_logic_vector(SHIFT_LEFT(unsigned(product2), to_integer(unsigned(exponent_2))));
 			if (exponent_gt_prodshift = '1') then
 				product_5 <= product_3;
 			else
 				product_5 <= product_4;
 			end if;
 			if (exponent_et_zero = '1') then
-				product_6 <= shr(product_5, conv_std_logic_vector('1', 106));
+				product_6 <= std_logic_vector(SHIFT_RIGHT(unsigned(product_5), 1));
 			else
 				product_6 <= product_5;
 			end if;
