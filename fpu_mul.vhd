@@ -240,7 +240,7 @@
 				product_2 <= product_1;
 			end if;
 			product_3 <= std_logic_vector(SHIFT_LEFT(unsigned(product_2), to_integer(unsigned(product_shift_2))));
-			product_4 <= std_logic_vector(SHIFT_LEFT(unsigned(product2), to_integer(unsigned(exponent_2))));
+			product_4 <= std_logic_vector(SHIFT_LEFT(unsigned(product_2), to_integer(unsigned(exponent_2))));
 			if (exponent_gt_prodshift = '1') then
 				product_5 <= product_3;
 			else
