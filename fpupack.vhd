@@ -52,7 +52,7 @@ package body fpupack is
 		v_count := "000000";
 		for i in s_vector'range loop
 			case s_vector(i) is
-				when '0' => v_count := std_logic_vector(to_unsigned(v_count, 6) + 1));
+				when '0' => v_count := std_logic_vector(unsigned(v_count, 6) + 1));
 				when others => exit;
 			end case;
 		end loop;
@@ -66,7 +66,7 @@ package body fpupack is
 		v_count := "000000";
 		for i in 105 downto 52 loop
 			case s_vector(i) is
-				when '0' => v_count := std_logic_vector(to_unsigned(v_count, 6) + 1));
+				when '0' => v_count := std_logic_vector(unsigned(v_count, 6) + 1));
 				when others => exit;
 			end case;
 		end loop;
