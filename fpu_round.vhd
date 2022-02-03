@@ -55,7 +55,7 @@
 	
 	architecture rtl of fpu_round is
 
-	signal	rounding_amount : std_logic_vector(55 downto 0);
+	signal	rounding_amount : std_logic_vector(55 downto 0) := "00000000000000000000000000000000000000000000000000000100";
 	signal	round_nearest : std_logic; 
 	signal	round_to_zero : std_logic; 
 	signal	round_to_pos_inf : std_logic; 
@@ -75,22 +75,26 @@
 	
 	begin
 	
-	rounding_amount  <= "00000000000000000000000000000000000000000000000000000100";
-	round_nearest  <= '1' when (round_mode = "00") else '0';
-	round_to_zero  <= '1' when (round_mode = "01") else '0';
-	round_to_pos_inf  <= '1' when (round_mode = "10") else '0';
-	round_to_neg_inf  <= '1' when (round_mode = "11") else '0';
-	round_nearest_trigger  <= '1' when round_nearest = '1' and mantissa_term(1) = '1' 
-							else '0'; 
-	round_to_pos_inf_trigger  <= '1' when sign_term = '0' and 
-							or_reduce(mantissa_term(1 downto 0)) = '1' else '0'; 
-	round_to_neg_inf_trigger  <= '1' when sign_term = '1' and 
-							or_reduce(mantissa_term(1 downto 0)) = '1' else '0';
-	round_trigger <= '1' when ( round_nearest = '1' and round_nearest_trigger = '1')
-							or (round_to_pos_inf = '1' and round_to_pos_inf_trigger = '1') 
-							or (round_to_neg_inf = '1' and round_to_neg_inf_trigger = '1')
-							else '0';
-	sum_round_overflow <= sum_round(55); 
+	--rounding_amount  <= "00000000000000000000000000000000000000000000000000000100";
+
+	process(round_mode, mantissa_term, sign_term, sum_round)
+		begin
+		round_nearest  <= '1' when (round_mode = "00") else '0';
+		round_to_zero  <= '1' when (round_mode = "01") else '0';
+		round_to_pos_inf  <= '1' when (round_mode = "10") else '0';
+		round_to_neg_inf  <= '1' when (round_mode = "11") else '0';
+		round_nearest_trigger  <= '1' when round_nearest = '1' and mantissa_term(1) = '1' 
+								else '0'; 
+		round_to_pos_inf_trigger  <= '1' when sign_term = '0' and 
+								or_reduce(mantissa_term(1 downto 0)) = '1' else '0'; 
+		round_to_neg_inf_trigger  <= '1' when sign_term = '1' and 
+								or_reduce(mantissa_term(1 downto 0)) = '1' else '0';
+		round_trigger <= '1' when ( round_nearest = '1' and round_nearest_trigger = '1')
+								or (round_to_pos_inf = '1' and round_to_pos_inf_trigger = '1') 
+								or (round_to_neg_inf = '1' and round_to_neg_inf_trigger = '1')
+								else '0';
+		sum_round_overflow <= sum_round(55); 
+		end process;
 							
 	
 	process(clk)

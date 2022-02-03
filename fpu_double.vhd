@@ -161,10 +161,13 @@
 			
 	count_busy <= '1' when (count_ready <= count_cycles) else '0';	 
 
-	add_enable_0  <= '1' when fpu_op_reg = "000" and (opa_reg(63) xor opb_reg(63)) = '0' else '0';
-	add_enable_1  <= '1' when (fpu_op_reg = "001") and (opa_reg(63) xor opb_reg(63)) = '1' else '0';
-	sub_enable_0  <= '1' when (fpu_op_reg = "000") and (opa_reg(63) xor opb_reg(63)) = '1' else '0';
-	sub_enable_1  <= '1' when (fpu_op_reg = "001") and (opa_reg(63) xor opb_reg(63)) = '0' else '0';
+	process(fpu_op_reg, opa_reg, opb_reg)
+		begin
+		add_enable_0  <= '1' when fpu_op_reg = "000" and (opa_reg(63) xor opb_reg(63)) = '0' else '0';
+		add_enable_1  <= '1' when (fpu_op_reg = "001") and (opa_reg(63) xor opb_reg(63)) = '1' else '0';
+		sub_enable_0  <= '1' when (fpu_op_reg = "000") and (opa_reg(63) xor opb_reg(63)) = '1' else '0';
+		sub_enable_1  <= '1' when (fpu_op_reg = "001") and (opa_reg(63) xor opb_reg(63)) = '0' else '0';
+		end process;
 		
 	process(clk)
 	begin

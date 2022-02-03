@@ -109,8 +109,13 @@
 	signal		product_lsb : std_logic;	
 
 	begin
+
+	process(product_6, product_lsb)
+		begin
 		product_7 <= '0' & product_6(105 downto 52) & product_lsb; 
 		exponent <= "000000000000";
+		end process;
+
 	process(clk)
 	begin
 	if rising_edge(clk) then

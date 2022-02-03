@@ -130,6 +130,10 @@
 	signal rem_lsb : std_logic;	
 	
 	begin
+
+	process(opa, opb, dividend_a_shifted, dividend_a, divisor_b_shifted, divisor_b, count_index, count_out,
+	 quotient_out, remainder_msb,  mantissa_1, remainder_out, remainder_b, expon_final_4, expon_final_4_et0, expon_final_5)
+		begin
 		sign  <= opa(63) xor opb(63);
 		expon_a  <= opa(62 downto 52);
 		expon_b  <= opb(62 downto 52);
@@ -159,7 +163,8 @@
 		remainder_6  <= remainder_1 when expon_final_4_et0 = '1' else remainder_5;
 		m_norm  <= or_reduce(expon_final_5);
 		rem_lsb <= or_reduce(remainder_6(54 downto 0));	
-		mantissa_7  <=  '0' & m_norm & mantissa_6 & remainder_6(55) & rem_lsb ;	
+		mantissa_7  <=  '0' & m_norm & mantissa_6 & remainder_6(55) & rem_lsb ;
+		end process;	
 	
 process(clk)
 	begin

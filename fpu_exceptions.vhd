@@ -107,11 +107,11 @@
 	signal	SNaN_trigger : std_logic;
 	
 	
-	signal	exp_2047 : std_logic_vector(10 downto 0); 
-	signal	exp_2046 : std_logic_vector(10 downto 0); 
-	signal	NaN_output_0 : std_logic_vector(62 downto 0); 
+	signal	exp_2047 : std_logic_vector(10 downto 0) := "11111111111"; 
+	signal	exp_2046 : std_logic_vector(10 downto 0) := "11111111110"; 
+	signal	NaN_output_0 : std_logic_vector(62 downto 0);
 	signal	NaN_output : std_logic_vector(62 downto 0); 
-	signal	mantissa_max : std_logic_vector(51 downto 0);
+	signal	mantissa_max : std_logic_vector(51 downto 0) := "1111111111111111111111111111111111111111111111111111";
 	signal	inf_round_down : std_logic_vector(62 downto 0);
 	signal	out_inf : std_logic_vector(62 downto 0);
 	signal	out_0 : std_logic_vector(63 downto 0);
@@ -119,11 +119,11 @@
 	signal	out_2 : std_logic_vector(63 downto 0);
 	
 	begin
-	
-		exp_2047 <= "11111111111";
-		exp_2046 <= "11111111110";
-		mantissa_max <= "1111111111111111111111111111111111111111111111111111";
-	
+
+	--exp_2047 <= 
+	--exp_2046 <= "11111111110";
+	--mantissa_max <= "1111111111111111111111111111111111111111111111111111";
+
 	process(clk)
 	begin
 	if rising_edge(clk) then

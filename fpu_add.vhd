@@ -89,13 +89,16 @@ signal   exp_diff_int : integer;
 
 begin
 
-small_shift_nonzero <= or_reduce(small_shift);
-small_is_nonzero <= or_reduce(exponent_small) or or_reduce(mantissa_small(51 downto 0));
-small_fraction_enable <= small_is_nonzero and not small_shift_nonzero;
-small_shift_2 <= "00000000000000000000000000000000000000000000000000000001";
-sum_overflow <= sum(55); -- sum[55] will be 0 if there was no carry from adding the 2 numbers
-sum_leading_one <= sum_2(54); -- this is where the leading one resides, unless denorm
---exp_diff_int <= to_integer(exponent_diff);
+process(small_shift, exponent_small, mantissa_small, sum, sum_2)
+	begin
+	small_shift_nonzero <= or_reduce(small_shift);
+	small_is_nonzero <= or_reduce(exponent_small) or or_reduce(mantissa_small(51 downto 0));
+	small_fraction_enable <= small_is_nonzero and not small_shift_nonzero;
+	small_shift_2 <= "00000000000000000000000000000000000000000000000000000001";
+	sum_overflow <= sum(55); -- sum[55] will be 0 if there was no carry from adding the 2 numbers
+	sum_leading_one <= sum_2(54); -- this is where the leading one resides, unless denorm
+	--exp_diff_int <= to_integer(exponent_diff);
+	end process;
 
 process(clk)
 	begin

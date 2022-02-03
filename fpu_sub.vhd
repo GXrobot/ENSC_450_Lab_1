@@ -96,11 +96,14 @@
 	
 	begin
 	
+process(subtra_shift, small_is_nonzero, exponent_large, exponent, fpu_op)
+	begin
 	subtra_shift_nonzero <= or_reduce(subtra_shift);
 	subtra_fraction_enable <= small_is_nonzero and not subtra_shift_nonzero;
 	subtra_shift_2 <= "0000000000000000000000000000000000000000000000000000001";
 	in_norm_out_denorm <= or_reduce(exponent_large) and not or_reduce(exponent);
 	fpu_op_add <= '1' when fpu_op = "000" else '0';
+	end process;
 	
 process(clk)
 	begin
