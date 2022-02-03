@@ -167,7 +167,7 @@ process
 			end if;
 			sum <= std_logic_vector(unsigned(large_add) + unsigned(small_shift_3));
 			if (sum_overflow = '1') then
-				sum_2 <= SHIFT_RIGHT(unsigned(sum), 1);
+				sum_2 <= std_logic_vector(SHIFT_RIGHT(unsigned(sum), 1));
 			else
 				sum_2 <= sum;
 			end if;
