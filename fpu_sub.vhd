@@ -186,7 +186,7 @@ process
 				large_norm_small_denorm <= '0';	
 			end if;
 			small_is_nonzero <= (not small_is_denorm) or or_reduce(mantissa_small);
-			exponent_diff <= std_logic_vector(unsigned(exponent_large) - unsigned(exponent_small) - large_norm_small_denorm);
+			exponent_diff <= std_logic_vector(unsigned(exponent_large) - unsigned(exponent_small) - unsigned('0'&large_norm_small_denorm));
 			minuend <= not large_is_denorm & mantissa_large & "00";
 			subtrahend <= not small_is_denorm & mantissa_small & "00";
 			subtra_shift <= std_logic_vector(shift_right(unsigned(subtrahend),  to_integer(unsigned(exponent_diff))));
