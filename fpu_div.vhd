@@ -352,7 +352,7 @@ process
  			if (quotient_msb = '1') then
 				expon_final_5 <= expon_final_4;
 			else
-				expon_final_5 <= std_logic_vector(unsigned(expon_final_4) - unsigned(expon_final_4_term));
+				expon_final_5 <= std_logic_vector(unsigned(expon_final_4) - unsigned'('0'&expon_final_4_term));
 			end if;
 			mantissa_a <= opa(51 downto 0);
 			mantissa_b <= opb(51 downto 0);
@@ -362,7 +362,7 @@ process
 			divisor_shift <= count_l_zeros(divisor_b);
 			dividend_shift_2 <= dividend_shift;
 			divisor_shift_2 <= divisor_shift;
-			remainder_shift_term <= std_logic_vector(unsigned("000000110100") - unsigned(expon_uf_term_4)); -- 52
+			remainder_shift_term <= std_logic_vector(unsigned'("000000110100") - unsigned(expon_uf_term_4)); -- 52
 			remainder_b <= std_logic_vector(shift_left(unsigned(remainder_a), to_integer(unsigned(remainder_shift_term))));
 			dividend_a_shifted <= std_logic_vector(shift_left(unsigned(dividend_a), to_integer(unsigned(dividend_shift_2))));
 			divisor_b_shifted <= std_logic_vector(shift_left(unsigned(divisor_b), to_integer(unsigned(divisor_shift_2))));
