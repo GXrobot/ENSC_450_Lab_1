@@ -33,8 +33,8 @@
 ---------------------------------------------------------------------
 
 library ieee;
-use work.fpupack.all;
-use work.comppack.all;
+-- use work.fpupack.all;
+-- use work.comppack.all;
 use ieee.std_logic_misc.all;
 use ieee.std_logic_unsigned.all;
 use ieee.std_logic_arith.all;
