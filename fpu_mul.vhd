@@ -177,14 +177,14 @@
 			a_is_zero <= not or_reduce(opa(62 downto 0)); 
 			b_is_zero <= not or_reduce(opb(62 downto 0)); 
 			in_zero <= a_is_zero or b_is_zero;
-			exponent_terms <= std_logic_vector(unsigned(exponent_a) + unsigned(exponent_b) + unsigned( "0000000000" & not a_is_norm) + unsigned("0000000000" & not b_is_norm));
+			exponent_terms <= std_logic_vector(unsigned(exponent_a) + unsigned(exponent_b) + unsigned'("0000000000" & not a_is_norm) + unsigned'("0000000000" & not b_is_norm));
 			if (exponent_terms > "001111111101") then
 				exponent_gt_expoffset <= '1';
 			else
 				exponent_gt_expoffset <= '0';
 			end if;
-			exponent_under <= std_logic_vector(unsigned("001111111110") - unsigned(exponent_terms));
-			exponent_1 <= std_logic_vector(unsigned(exponent_terms) - unsigned("001111111110")); 
+			exponent_under <= std_logic_vector(unsigned'("001111111110") - unsigned(exponent_terms));
+			exponent_1 <= std_logic_vector(unsigned(exponent_terms) - unsigned'("001111111110")); 
 			if (exponent_gt_expoffset = '1') then
 				exponent_2 <= exponent_1;
 			else
@@ -222,7 +222,7 @@
 			sum_1 <= std_logic_vector(unsigned('0' & sum_0(41 downto 7)) + unsigned(product_e));
 			sum_2 <= std_logic_vector(unsigned(sum_1(35 downto 10)) + unsigned('0' & product_c));
 			sum_3 <= std_logic_vector(unsigned( '0' & sum_2(41 downto 7)) + unsigned(product_h));
-			sum_4 <= std_logic_vector(unsigned( '0' & sum_3) + unsigned(product_f);
+			sum_4 <= std_logic_vector(unsigned( '0' & sum_3) + unsigned(product_f));
 			sum_5 <= std_logic_vector(unsigned('0' & sum_4(36 downto 10)) + unsigned(product_d);
 			sum_6 <= std_logic_vector(unsigned(sum_5(27 downto 7)) + unsigned('0' & product_i));
 			sum_7 <= std_logic_vector(unsigned(sum_6) + unsigned('0' & product_g));
