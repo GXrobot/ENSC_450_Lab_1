@@ -183,7 +183,7 @@ process
 		elsif (enable_signal = '1') then
 			count_out <= "110101"; -- 53
 		elsif (count_nonzero = '1') then
-			count_out <= count_out - "000001"; 
+			count_out <= std_logic_vector(unsigned(count_out) - 1); 
 		end if;
 	end process;
 	
@@ -207,9 +207,9 @@ process
 			quotient <= (others =>'0');
 		elsif (count_nonzero_signal = '1') then
 			if (divisor_signal > dividend_signal) then
-				quotient(conv_integer(count_index)) <= '0';
+				quotient(to_integer(unsigned(count_index))) <= '0';
 			else
-				quotient(conv_integer(count_index)) <= '1';
+				quotient(to_integer(unsigned(count_index))) <= '1';
 			end if; 
 		end if;
 	end process;
@@ -241,9 +241,9 @@ process
 			divisor_signal <= divisor_1;
 		elsif (count_nonzero_signal = '1') then
 			if (divisor_signal > dividend_signal) then
-				dividend_signal <= shl(dividend_signal, conv_std_logic_vector('1', 54));
+				dividend_signal <= std_logic_vector(shift_left(unsigned(dividend_signal), 1));
 			else
-				dividend_signal <= shl(dividend_signal - divisor_signal, conv_std_logic_vector('1', 54));
+				dividend_signal <= std_logic_vector(shift_left(unsigned(dividend_signal) - unsigned(divisor_signal), 1));
 			end if;
 		end if;
 	end process;
@@ -283,22 +283,22 @@ process
 			divisor_b_shifted <=  (others =>'0');
 			mantissa_1 <= (others =>'0');
 		elsif (enable_signal_2 = '1') then
-			expon_term  <= exponent_a + "001111111111"; -- 1023
+			expon_term  <= std_logic_vector(unsigned(exponent_a) + unsigned'("001111111111")); -- 1023
 			if (exponent_b > expon_term) then
 				expon_uf_1 <= '1';
 			else
 				expon_uf_1 <= '0';
 			end if;
 			if (expon_uf_1 = '1') then
-				expon_uf_term_1 <= exponent_b - expon_term;
+				expon_uf_term_1 <= std_logic_vector(unsigned(exponent_b) - unsigned(expon_term));
 				expon_final_2 <= (others =>'0');
 			else
 				expon_uf_term_1 <= (others =>'0');
 				expon_final_2 <= expon_final_1;
 			end if;
-        	expon_final_1 <= expon_term - exponent_b;
+        	expon_final_1 <= std_logic_vector(unsigned(expon_term) - unsigned(exponent_b));
         	if (expon_uf_1 = '1') then
-				expon_uf_term_1 <= exponent_b - expon_term;
+				expon_uf_term_1 <= std_logic_vector(unsigned(exponent_b) - unsigned(expon_term));
 			else
 				expon_uf_term_1 <= (others =>'0');
 			end if;
@@ -318,11 +318,11 @@ process
 				expon_uf_2 <= '0';
 			end if;
 			if (expon_uf_2 = '1') then
-				expon_uf_term_2 <= expon_shift_a - expon_final_2;
+				expon_uf_term_2 <= std_logic_vector(unsigned(expon_shift_a) - unsigned(expon_final_2));
 			else
 				expon_uf_term_2 <= (others =>'0');
 			end if;
-        	expon_uf_term_3 <= expon_uf_term_2 + expon_uf_term_1;
+        	expon_uf_term_3 <= std_logic_vector(unsigned(expon_uf_term_2) + unsigned(expon_uf_term_1));
         	if (expon_uf_term_3 > "000000110011") then -- 51
 				expon_uf_gt_maxshift <= '1';
 			else
@@ -336,9 +336,9 @@ process
 			if (expon_uf_2 = '1') then
 				expon_final_3 <= (others =>'0');
 			else
-				expon_final_3 <= expon_final_2 - expon_shift_a;
+				expon_final_3 <= std_logic_vector(unsigned(expon_final_2) - unsigned(expon_shift_a));
 			end if;
-        	expon_final_4 <= expon_final_3 + expon_shift_b;
+        	expon_final_4 <= std_logic_vector(unsigned(expon_final_3) + unsigned(expon_shift_b));
         	if (expon_final_4 = "000000000000") then 
 				expon_final_4_et0 <= '1';
 			else
@@ -352,7 +352,7 @@ process
  			if (quotient_msb = '1') then
 				expon_final_5 <= expon_final_4;
 			else
-				expon_final_5 <= expon_final_4 - expon_final_4_term;
+				expon_final_5 <= std_logic_vector(unsigned(expon_final_4) - unsigned(expon_final_4_term));
 			end if;
 			mantissa_a <= opa(51 downto 0);
 			mantissa_b <= opb(51 downto 0);
@@ -362,11 +362,11 @@ process
 			divisor_shift <= count_l_zeros(divisor_b);
 			dividend_shift_2 <= dividend_shift;
 			divisor_shift_2 <= divisor_shift;
-			remainder_shift_term <= "000000110100" - expon_uf_term_4; -- 52
-			remainder_b <= shl(remainder_a, remainder_shift_term);
-			dividend_a_shifted <= shl(dividend_a, dividend_shift_2);
-			divisor_b_shifted <= shl(divisor_b, divisor_shift_2);
-			mantissa_1 <= shr(quotient_out(53 downto 2), expon_uf_term_4);
+			remainder_shift_term <= std_logic_vector(unsigned("000000110100") - unsigned(expon_uf_term_4)); -- 52
+			remainder_b <= std_logic_vector(shift_left(unsigned(remainder_a), to_integer(unsigned(remainder_shift_term))));
+			dividend_a_shifted <= std_logic_vector(shift_left(unsigned(dividend_a), to_integer(unsigned(dividend_shift_2))));
+			divisor_b_shifted <= std_logic_vector(shift_left(unsigned(divisor_b), to_integer(unsigned(divisor_shift_2))));
+			mantissa_1 <= std_logic_vector(shift_right(unsigned(quotient_out(53 downto 2)), to_integer(unsigned(expon_uf_term_4))));
 		end if;
 	end process;
 
