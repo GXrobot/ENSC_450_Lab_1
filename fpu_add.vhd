@@ -141,12 +141,12 @@ process
 				mantissa_small <= mantissa_a;
 				mantissa_large <= mantissa_b;
 			end if;
-			if (exponent_small > 0) then
+			if (unsigned(exponent_small) > 0) then
 				small_is_denorm <= '0';
 			else
 				small_is_denorm <= '1';
 			end if;
-			if (exponent_large > 0) then
+			if (unsigned(exponent_large) > 0) then
 				large_is_denorm <= '0';
 			else
 				large_is_denorm <= '1';
@@ -156,30 +156,30 @@ process
 			else
 				large_norm_small_denorm <= "00000000000";	
 			end if;
-			exponent_diff <= exponent_large - exponent_small - large_norm_small_denorm;
+			exponent_diff <= std_logic_vector(unsigned(exponent_large) - unsigned(exponent_small) - unsigned(large_norm_small_denorm));
 			large_add <= '0' & not large_is_denorm & mantissa_large & "00";
 			small_add <= '0' & not small_is_denorm & mantissa_small & "00";
-			small_shift <= shr(small_add,  exponent_diff);
+			small_shift <= std_logic_vector(shift_right(unsigned(small_add), unsigned(exponent_diff)));
 			if (small_fraction_enable = '1') then
 				small_shift_3 <= small_shift_2;
 			else
 				small_shift_3 <= small_shift;
 			end if;
-			sum <= large_add + small_shift_3;
+			sum <= std_logic_vector(unsigned(large_add) + unsigned(small_shift_3);
 			if (sum_overflow = '1') then
-				sum_2 <= shr(sum, conv_std_logic_vector('1', 56));
+				sum_2 <= shift_right(unsigned(sum), 1);
 			else
 				sum_2 <= sum;
 			end if;
 			sum_3 <= sum_2;
 			if (sum_overflow = '1') then
-				exponent <=  exponent_large + 1;
+				exponent <=  std_logic_vector(unsigned(exponent_large) + 1);
 			else
 				exponent <=  exponent_large;
 			end if;
 			denorm_to_norm <= sum_leading_one and large_is_denorm;
 			if (denorm_to_norm = '1') then
-				exponent_2 <= exponent + 1;
+				exponent_2 <= std_logic_vector(unsigned(exponent) + 1);
 			else
 				exponent_2 <= exponent;
 			end if;

@@ -170,12 +170,12 @@ process
 				mantissa_large <= mantissa_b;
 				sign <= (not opb(63)) xor fpu_op_add;
 			end if;
-			if (exponent_small > 0) then
+			if (unsigned(exponent_small) > 0) then
 				small_is_denorm <= '0';
 			else
 				small_is_denorm <= '1';
 			end if;
-			if (exponent_large > 0) then
+			if (unsigned(exponent_large) > 0) then
 				large_is_denorm <= '0';
 			else
 				large_is_denorm <= '1';
@@ -186,16 +186,16 @@ process
 				large_norm_small_denorm <= '0';	
 			end if;
 			small_is_nonzero <= (not small_is_denorm) or or_reduce(mantissa_small);
-			exponent_diff <= exponent_large - exponent_small - large_norm_small_denorm;
+			exponent_diff <= std_logic_vector(unsigned(exponent_large) - unsigned(exponent_small) - unsigned(large_norm_small_denorm));
 			minuend <= not large_is_denorm & mantissa_large & "00";
 			subtrahend <= not small_is_denorm & mantissa_small & "00";
-			subtra_shift <= shr(subtrahend,  exponent_diff);
+			subtra_shift <= std_logic_vector(shift_right(unsigned(subtrahend),  exponent_diff));
 			if (subtra_fraction_enable = '1') then
 				subtra_shift_3 <= subtra_shift_2;
 			else
 				subtra_shift_3 <= subtra_shift;
 			end if;
-			diff <= minuend - subtra_shift_3;
+			diff <= std_logic_vector(unsigned(minuend) - unsigned(subtra_shift_3));
 			diff_shift <= count_l_zeros(diff(54 downto 0));
 			diff_shift_2 <= diff_shift;
 			if (diff_shift_2 > exponent_large) then
@@ -209,11 +209,11 @@ process
 				diffshift_et_55 <= '0';
 			end if;
 			if (diffshift_gt_exponent = '1') then
-				diff_1 <= shl(diff, exponent_large);
+				diff_1 <= std_logic_vector(shift_left(unsigned(diff), exponent_large));
 				exponent <= "00000000000";
 			else
-				diff_1 <= shl(diff, diff_shift_2);
-				exponent <= exponent_large - diff_shift_2;
+				diff_1 <= std_logic_vector(shift_left(unsigned(diff), diff_shift_2));
+				exponent <= std_logic_vector(unsigned(exponent_large) - unsigned(diff_shift_2));
 			end if;
 			if (diffshift_et_55 = '1') then
 				exponent_2 <= "00000000000";
@@ -221,7 +221,7 @@ process
 				exponent_2 <=  exponent;
 			end if;
 			if (in_norm_out_denorm = '1') then
-				diff_2 <= '0' & shr(diff_1,conv_std_logic_vector('1', 55));
+				diff_2 <= '0' & std_logic_vector(shift_right(unsigned(diff_1),conv_std_logic_vector('1', 55)));
 			else
 				diff_2 <= '0' & diff_1;
 			end if;
