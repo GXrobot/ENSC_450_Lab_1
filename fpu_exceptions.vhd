@@ -126,7 +126,7 @@
 	
 	process(clk)
 	begin
-	wait until clk'event and clk = '1';
+	if rising_edge(clk) then
 		if (rst = '1') then
 			in_et_zero <=    '0';
 			opa_et_zero <=   '0';
@@ -494,12 +494,13 @@
 				out_2 <= out_1;
 			end if;
 		end if;
+	end if;
 	end process;
 
 
 	process(clk)
 	begin
-	wait until clk'event and clk = '1';
+	if rising_edge(clk) then
 		if (rst = '1') then
 			ex_enable <= '0';
 			underflow <= '0';
@@ -517,5 +518,6 @@
 			invalid <= invalid_trigger;
 			out_fp <= out_2;
 		end if;
+	end if;
 	end process;
 	end rtl;

@@ -99,7 +99,7 @@ sum_leading_one <= sum_2(54); -- this is where the leading one resides, unless d
 
 process(clk)
 	begin
-	wait until clk'event and clk = '1';
+	if rising_edge(clk) then
 		if (rst = '1') then
 			sign <= '0';
 			exponent_a <= (others =>'0');
@@ -184,6 +184,7 @@ process(clk)
 				exponent_2 <= exponent;
 			end if;
 		end if;
+	end if;
 	end process;
 
 

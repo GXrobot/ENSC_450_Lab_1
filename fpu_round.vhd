@@ -95,7 +95,7 @@
 	
 	process(clk)
 	begin
-	wait until clk'event and clk = '1';
+	if rising_edge(clk) then
 		if (rst = '1') then
 				sum_round <= (others =>'0');
 				sum_round_2 <= (others =>'0');
@@ -123,5 +123,6 @@
 				exponent_final <= exponent_final_2;
 				round_out <=  sign_term & exponent_final_2(10 downto 0) & sum_final(53 downto 2);
 		end if;
+	end if;
 	end process;
 	end rtl;	

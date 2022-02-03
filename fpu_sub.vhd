@@ -104,7 +104,7 @@
 	
 process(clk)
 	begin
-	wait until clk'event and clk = '1';
+	if rising_edge(clk) then
 		if (rst = '1') then
 			exponent_a <= (others =>'0');
 			exponent_b <= (others =>'0');
@@ -226,6 +226,7 @@ process(clk)
 				diff_2 <= '0' & diff_1;
 			end if;
 		end if;
+	end if;
 	end process;
 
 	end rtl;

@@ -163,7 +163,7 @@
 	
 process(clk)
 	begin
-	wait until clk'event and clk = '1';
+	if rising_edge(clk) then
 		if (rst = '1') then
 			exponent_out <= (others =>'0');
 		else 
@@ -173,11 +173,12 @@ process(clk)
 				exponent_out <= expon_final_5;
 			end if;
 		end if;
+	end if;
 	end process;
 	
 process(clk)
 	begin
-	wait until clk'event and clk = '1';
+	if rising_edge(clk) then
 		if (rst = '1') then
 			count_out <= (others =>'0');
 		elsif (enable_signal = '1') then
@@ -185,11 +186,12 @@ process(clk)
 		elsif (count_nonzero = '1') then
 			count_out <= std_logic_vector(unsigned(count_out) - 1); 
 		end if;
+	end if;
 	end process;
 	
 process(clk)
 	begin
-	wait until clk'event and clk = '1';
+	if rising_edge(clk) then
 		if (rst = '1') then
 			quotient_out <= (others =>'0');
 			remainder_out <= (others =>'0');
@@ -197,12 +199,13 @@ process(clk)
 			quotient_out <= quotient;
 			remainder_out <= remainder;
 		end if;
+	end if;
 	end process;
 	
 
 process(clk)
 	begin
-	wait until clk'event and clk = '1';
+	if rising_edge(clk) then
 		if (rst = '1') then
 			quotient <= (others =>'0');
 		elsif (count_nonzero_signal = '1') then
@@ -212,11 +215,12 @@ process(clk)
 				quotient(to_integer(unsigned(count_index))) <= '1';
 			end if; 
 		end if;
+	end if;
 	end process;
 
 process(clk)
 	begin
-	wait until clk'event and clk = '1';
+	if rising_edge(clk) then
 		if (rst = '1') then
 			remainder <= (others =>'0');
 			remainder_msb <= '0';
@@ -228,11 +232,12 @@ process(clk)
 		    	remainder_msb <= '1';
 		    end if;
 		end if;
+	end if;
 	end process;
 
 process(clk)
 	begin
-	wait until clk'event and clk = '1';
+	if rising_edge(clk) then
 		if (rst = '1') then
 			dividend_signal <= (others =>'0');
 			divisor_signal <= (others =>'0');
@@ -246,11 +251,12 @@ process(clk)
 				dividend_signal <= std_logic_vector(shift_left(unsigned(dividend_signal) - unsigned(divisor_signal), 1));
 			end if;
 		end if;
+	end if;
 	end process;
 
 process(clk)
 	begin
-	wait until clk'event and clk = '1';
+	if rising_edge(clk) then
 		if (rst = '1') then
 			expon_term  <= (others =>'0');
  			expon_uf_1 <= '0';
@@ -368,11 +374,12 @@ process(clk)
 			divisor_b_shifted <= std_logic_vector(shift_left(unsigned(divisor_b), to_integer(unsigned(divisor_shift_2))));
 			mantissa_1 <= std_logic_vector(shift_right(unsigned(quotient_out(53 downto 2)), to_integer(unsigned(expon_uf_term_4))));
 		end if;
+	end if;
 	end process;
 
 process(clk)
 	begin
-	wait until clk'event and clk = '1';
+	if rising_edge(clk) then
 		if (rst = '1') then
 			count_nonzero_signal <= '0';	
 			count_nonzero_signal_2 <= '0';
@@ -392,16 +399,18 @@ process(clk)
 			enable_signal_d <= enable_signal_c;
 			enable_signal_e <= enable_signal_d;
 		end if;
+	end if;
 	end process;
 
 process(clk)
 	begin
-	wait until clk'event and clk = '1';
+	if rising_edge(clk) then
 		if (rst = '1') then
 			enable_signal_2 <= '0';
 		elsif (enable = '1') then
 			enable_signal_2 <= '1';
 		end if;
+	end if;
 	end process;
 
 	end rtl;

@@ -113,7 +113,7 @@
 		exponent <= "000000000000";
 	process(clk)
 	begin
-	wait until clk'event and clk = '1';
+	if rising_edge(clk) then
 		if (rst = '1') then
 			sign <= '0';
 			mantissa_a <= (others =>'0');
@@ -260,5 +260,6 @@
 			product_shift <= count_zeros_mul(product(105 downto 0));
 			product_shift_2 <= product_shift;
 		end if;
+	end if;
 	end process;
 	end rtl;

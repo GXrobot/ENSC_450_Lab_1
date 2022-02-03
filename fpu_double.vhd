@@ -168,7 +168,7 @@
 		
 	process(clk)
 	begin
-	wait until clk'event and clk = '1';
+	if rising_edge(clk) then
 		if (rst = '1') then
 			mantissa_round <= (others =>'0');
 			exponent_round <= (others =>'0');
@@ -202,13 +202,14 @@
 				count_cycles <= (others =>'0');
 			end if;
 		end if;
+	end if;
 	end process;
 			
 
 	
 	process(clk)
 	begin
-	wait until clk'event and clk = '1';
+	if rising_edge(clk) then
 		if (rst = '1') then
 			add_enable <= '0';
 			sub_enable <= '0';
@@ -248,11 +249,12 @@
 				exp_addsub <= '0' & exp_sub_out;
 			end if;
 		end if;
+	end if;
 	end process;
 	
 	process(clk)
 	begin
-	wait until clk'event and clk = '1';
+	if rising_edge(clk) then
 		if (rst = '1') then
 			count_ready <= (others =>'0');
 		elsif (enable_reg_1 = '1') then 
@@ -260,11 +262,12 @@
 		elsif (count_busy = '1') then
 			count_ready <= std_logic_vector(unsigned(count_ready) + unsigned'("0000001"));
 		end if; 
+	end if;
 	end process;
 	
 	process(clk)
 	begin
-	wait until clk'event and clk = '1';
+	if rising_edge(clk) then
 		if (rst = '1') then
 			enable_reg <= '0';
 			enable_reg_1 <= '0';
@@ -284,11 +287,12 @@
 				enable_reg_3 <= '0';
 			end if;
 		end if; 
+	end if;
 	end process;
 			
 	process(clk)
 	begin
-	wait until clk'event and clk = '1';
+	if rising_edge(clk) then
 		if (rst = '1') then
 			opa_reg <= (others =>'0');
 			opb_reg <= (others =>'0');
@@ -302,11 +306,12 @@
 			rmode_reg <= rmode;
 			op_enable <= '1';
 		end if; 
+	end if;
 	end process;
 	
 	process(clk)
 	begin
-	wait until clk'event and clk = '1';
+	if rising_edge(clk) then
 		if (rst = '1') then
 			ready_0 <= '0';
 			ready_1 <= '0';
@@ -320,11 +325,12 @@
 			ready_1 <= ready_0;
 			ready <= ready_1;  
 		end if; 
+	end if;
 	end process;
 	
 	process(clk)
 	begin
-	wait until clk'event and clk = '1';
+	if rising_edge(clk) then
 		if (rst = '1') then
 			underflow <= '0';
 			overflow <= '0';
@@ -344,5 +350,6 @@
 				out_fp <= out_round;
 			end if;
 		end if; 
+	end if;
 	end process;
 	end rtl;
