@@ -161,7 +161,7 @@
 		rem_lsb <= or_reduce(remainder_6(54 downto 0));	
 		mantissa_7  <=  '0' & m_norm & mantissa_6 & remainder_6(55) & rem_lsb ;	
 	
-process
+process(clk)
 	begin
 	wait until clk'event and clk = '1';
 		if (rst = '1') then
@@ -175,7 +175,7 @@ process
 		end if;
 	end process;
 	
-process
+process(clk)
 	begin
 	wait until clk'event and clk = '1';
 		if (rst = '1') then
@@ -187,7 +187,7 @@ process
 		end if;
 	end process;
 	
-process
+process(clk)
 	begin
 	wait until clk'event and clk = '1';
 		if (rst = '1') then
@@ -200,7 +200,7 @@ process
 	end process;
 	
 
-process
+process(clk)
 	begin
 	wait until clk'event and clk = '1';
 		if (rst = '1') then
@@ -214,7 +214,7 @@ process
 		end if;
 	end process;
 
-process
+process(clk)
 	begin
 	wait until clk'event and clk = '1';
 		if (rst = '1') then
@@ -230,7 +230,7 @@ process
 		end if;
 	end process;
 
-process
+process(clk)
 	begin
 	wait until clk'event and clk = '1';
 		if (rst = '1') then
@@ -248,7 +248,7 @@ process
 		end if;
 	end process;
 
-process
+process(clk)
 	begin
 	wait until clk'event and clk = '1';
 		if (rst = '1') then
@@ -370,7 +370,7 @@ process
 		end if;
 	end process;
 
-process
+process(clk)
 	begin
 	wait until clk'event and clk = '1';
 		if (rst = '1') then
@@ -394,7 +394,7 @@ process
 		end if;
 	end process;
 
-process
+process(clk)
 	begin
 	wait until clk'event and clk = '1';
 		if (rst = '1') then

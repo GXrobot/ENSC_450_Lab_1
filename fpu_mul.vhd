@@ -111,7 +111,7 @@
 	begin
 		product_7 <= '0' & product_6(105 downto 52) & product_lsb; 
 		exponent <= "000000000000";
-	process
+	process(clk)
 	begin
 	wait until clk'event and clk = '1';
 		if (rst = '1') then

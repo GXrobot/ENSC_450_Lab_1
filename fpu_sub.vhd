@@ -102,7 +102,7 @@
 	in_norm_out_denorm <= or_reduce(exponent_large) and not or_reduce(exponent);
 	fpu_op_add <= '1' when fpu_op = "000" else '0';
 	
-process
+process(clk)
 	begin
 	wait until clk'event and clk = '1';
 		if (rst = '1') then

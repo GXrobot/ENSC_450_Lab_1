@@ -97,7 +97,7 @@ sum_overflow <= sum(55); -- sum[55] will be 0 if there was no carry from adding 
 sum_leading_one <= sum_2(54); -- this is where the leading one resides, unless denorm
 --exp_diff_int <= to_integer(exponent_diff);
 
-process
+process(clk)
 	begin
 	wait until clk'event and clk = '1';
 		if (rst = '1') then

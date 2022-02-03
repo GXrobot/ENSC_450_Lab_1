@@ -93,7 +93,7 @@
 	sum_round_overflow <= sum_round(55); 
 							
 	
-	process
+	process(clk)
 	begin
 	wait until clk'event and clk = '1';
 		if (rst = '1') then

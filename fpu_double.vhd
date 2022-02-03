@@ -166,7 +166,7 @@
 	sub_enable_0  <= '1' when (fpu_op_reg = "000") and (opa_reg(63) xor opb_reg(63)) = '1' else '0';
 	sub_enable_1  <= '1' when (fpu_op_reg = "001") and (opa_reg(63) xor opb_reg(63)) = '0' else '0';
 		
-	process
+	process(clk)
 	begin
 	wait until clk'event and clk = '1';
 		if (rst = '1') then
@@ -206,7 +206,7 @@
 			
 
 	
-	process
+	process(clk)
 	begin
 	wait until clk'event and clk = '1';
 		if (rst = '1') then
@@ -250,7 +250,7 @@
 		end if;
 	end process;
 	
-	process
+	process(clk)
 	begin
 	wait until clk'event and clk = '1';
 		if (rst = '1') then
@@ -262,7 +262,7 @@
 		end if; 
 	end process;
 	
-	process
+	process(clk)
 	begin
 	wait until clk'event and clk = '1';
 		if (rst = '1') then
@@ -286,7 +286,7 @@
 		end if; 
 	end process;
 			
-	process
+	process(clk)
 	begin
 	wait until clk'event and clk = '1';
 		if (rst = '1') then
@@ -304,7 +304,7 @@
 		end if; 
 	end process;
 	
-	process
+	process(clk)
 	begin
 	wait until clk'event and clk = '1';
 		if (rst = '1') then
@@ -322,7 +322,7 @@
 		end if; 
 	end process;
 	
-	process
+	process(clk)
 	begin
 	wait until clk'event and clk = '1';
 		if (rst = '1') then

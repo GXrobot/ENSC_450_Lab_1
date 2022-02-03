@@ -124,7 +124,7 @@
 		exp_2046 <= "11111111110";
 		mantissa_max <= "1111111111111111111111111111111111111111111111111111";
 	
-	process
+	process(clk)
 	begin
 	wait until clk'event and clk = '1';
 		if (rst = '1') then
@@ -497,7 +497,7 @@
 	end process;
 
 
-	process
+	process(clk)
 	begin
 	wait until clk'event and clk = '1';
 		if (rst = '1') then
