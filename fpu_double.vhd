@@ -163,11 +163,31 @@
 
 	process(fpu_op_reg, opa_reg, opb_reg)
 		begin
-		add_enable_0  <= '1' when fpu_op_reg = "000" and (opa_reg(63) xor opb_reg(63)) = '0' else '0';
-		add_enable_1  <= '1' when (fpu_op_reg = "001") and (opa_reg(63) xor opb_reg(63)) = '1' else '0';
-		sub_enable_0  <= '1' when (fpu_op_reg = "000") and (opa_reg(63) xor opb_reg(63)) = '1' else '0';
-		sub_enable_1  <= '1' when (fpu_op_reg = "001") and (opa_reg(63) xor opb_reg(63)) = '0' else '0';
-		end process;
+		--add_enable_0  <= '1' when fpu_op_reg = "000" and (opa_reg(63) xor opb_reg(63)) = '0' else '0';
+		if (fpu_op_reg = "000" and (opa_reg(63) xor opb_reg(63)) = '0') then
+			add_enable_0 <= '1'
+		else
+			add_enable_0 <= '0';
+		end if;
+		--add_enable_1  <= '1' when (fpu_op_reg = "001") and (opa_reg(63) xor opb_reg(63)) = '1' else '0';
+		if (fpu_op_reg = "001" and (opa_reg(63) xor opb_reg(63)) = '1') then
+			add_enable_1 <= '1';
+		else
+			add_enable_1 <= '0';
+		end if;
+		--sub_enable_0  <= '1' when (fpu_op_reg = "000") and (opa_reg(63) xor opb_reg(63)) = '1' else '0';
+		if (fpu_op_reg = "000" and (opa_reg(63) xor opb_reg(63)) = '1') then
+			sub_enable_0 <= '1';
+		else
+			sub_enable_0 <= '0';
+		end if;
+		--sub_enable_1  <= '1' when (fpu_op_reg = "001") and (opa_reg(63) xor opb_reg(63)) = '0' else '0';
+		if (fpu_op_reg = "001" and (opa_reg(63) xor opb_reg(63)) = '0') then
+			sub_enable_1 <= '1';
+		else
+			sub_enable_1 <= '0';
+		end if;
+	end process;
 		
 	process(clk)
 	begin

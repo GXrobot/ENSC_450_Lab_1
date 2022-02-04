@@ -114,7 +114,7 @@
 		begin
 		product_7 <= '0' & product_6(105 downto 52) & product_lsb; 
 		exponent <= "000000000000";
-		end process;
+	end process;
 
 	process(clk)
 	begin

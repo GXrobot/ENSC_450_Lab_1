@@ -79,20 +79,64 @@
 
 	process(round_mode, mantissa_term, sign_term, sum_round)
 		begin
-		round_nearest  <= '1' when (round_mode = "00") else '0';
-		round_to_zero  <= '1' when (round_mode = "01") else '0';
-		round_to_pos_inf  <= '1' when (round_mode = "10") else '0';
-		round_to_neg_inf  <= '1' when (round_mode = "11") else '0';
-		round_nearest_trigger  <= '1' when round_nearest = '1' and mantissa_term(1) = '1' 
-								else '0'; 
-		round_to_pos_inf_trigger  <= '1' when sign_term = '0' and 
-								or_reduce(mantissa_term(1 downto 0)) = '1' else '0'; 
-		round_to_neg_inf_trigger  <= '1' when sign_term = '1' and 
-								or_reduce(mantissa_term(1 downto 0)) = '1' else '0';
-		round_trigger <= '1' when ( round_nearest = '1' and round_nearest_trigger = '1')
-								or (round_to_pos_inf = '1' and round_to_pos_inf_trigger = '1') 
-								or (round_to_neg_inf = '1' and round_to_neg_inf_trigger = '1')
-								else '0';
+		--round_nearest  <= '1' when (round_mode = "00") else '0';
+		if (round_mode = "00") then
+			round_nearest <= '1';
+		else
+			round_nearest <= '0';
+		end if;
+		--round_to_zero  <= '1' when (round_mode = "01") else '0';
+		if (round_mode = "01") then
+			round_to_zero <= '1';
+		else
+			round_to_zero <= '0';
+		end if;
+		--round_to_pos_inf  <= '1' when (round_mode = "10") else '0';
+		if (round_mode = "10") then
+			round_to_pos_inf <= '1';
+		else
+			round_to_pos_inf <= '0';
+		end if;
+		--round_to_neg_inf  <= '1' when (round_mode = "11") else '0';
+		if (round_mode = "11") then
+			round_to_neg_inf <= '1';
+		else
+			round_to_neg_inf <= '0';
+		end if;
+		--round_nearest_trigger  <= '1' when round_nearest = '1' and mantissa_term(1) = '1' else '0'; 
+		if (round_nearest = '1' and mantissa_term(1) = '1') then
+			round_nearest_trigger <= '1';
+		else
+			round_nearest_trigger <= '0';
+		end if;	
+
+		
+		-- round_to_pos_inf_trigger  <= '1' when sign_term = '0' and or_reduce(mantissa_term(1 downto 0)) = '1' else '0'; 
+		if (sign_term = '0' and or_reduce(mantissa_term(1 downto 0)) = '1') then
+			round_to_pos_inf_trigger <= '1';
+		else
+			round_to_pos_inf_trigger <= '0';
+		end if;	
+		--round_to_neg_inf_trigger  <= '1' when sign_term = '1' and or_reduce(mantissa_term(1 downto 0)) = '1' else '0';
+		if (sign_term = '1' and or_reduce(mantissa_term(1 downto 0)) = '1') then
+			round_to_neg_inf_trigger <= '1';
+		else
+			round_to_neg_inf_trigger <= '0';
+		end if;	
+
+
+		--round_trigger <= '1' when ( round_nearest = '1' and round_nearest_trigger = '1')
+		--						or (round_to_pos_inf = '1' and round_to_pos_inf_trigger = '1') 
+		--						or (round_to_neg_inf = '1' and round_to_neg_inf_trigger = '1')
+		--						else '0';
+		if (( round_nearest = '1' and round_nearest_trigger = '1') 
+			or (round_to_pos_inf = '1' and round_to_pos_inf_trigger = '1') 
+			or (round_to_neg_inf = '1' and round_to_neg_inf_trigger = '1')) then
+			round_trigger <= '1';
+		else
+			round_trigger <= '0';
+		end if;
+		
 		sum_round_overflow <= sum_round(55); 
 		end process;
 							

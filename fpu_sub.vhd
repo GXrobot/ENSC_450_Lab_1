@@ -95,141 +95,146 @@
 	signal   in_norm_out_denorm : std_logic;
 	
 	begin
-	
-process(subtra_shift, small_is_nonzero, exponent_large, exponent, fpu_op)
-	begin
-	subtra_shift_nonzero <= or_reduce(subtra_shift);
-	subtra_fraction_enable <= small_is_nonzero and not subtra_shift_nonzero;
-	subtra_shift_2 <= "0000000000000000000000000000000000000000000000000000001";
-	in_norm_out_denorm <= or_reduce(exponent_large) and not or_reduce(exponent);
-	fpu_op_add <= '1' when fpu_op = "000" else '0';
+		
+	process(subtra_shift, small_is_nonzero, exponent_large, exponent, fpu_op)
+		begin
+		subtra_shift_nonzero <= or_reduce(subtra_shift);
+		subtra_fraction_enable <= small_is_nonzero and not subtra_shift_nonzero;
+		subtra_shift_2 <= "0000000000000000000000000000000000000000000000000000001";
+		in_norm_out_denorm <= or_reduce(exponent_large) and not or_reduce(exponent);
+		--fpu_op_add <= '1' when fpu_op = "000" else '0';
+		if (fpu_op = '000') then
+			fpu_op_add <= '1';
+		else
+			fpu_op_add <= '0';
+		end if;
 	end process;
-	
-process(clk)
-	begin
-	if rising_edge(clk) then
-		if (rst = '1') then
-			exponent_a <= (others =>'0');
-			exponent_b <= (others =>'0');
-			mantissa_a <= (others =>'0');
-			mantissa_b <= (others =>'0');
-			expa_gt_expb <= '0';
-			expa_et_expb <= '0';
-			mana_gtet_manb <= '0';
-   			a_gtet_b <= '0';
-			exponent_small  <= (others =>'0');
-			exponent_large  <= (others =>'0');
-			mantissa_small  <= (others =>'0');
-			mantissa_large  <= (others =>'0');
-			sign <= '0';
-			small_is_denorm <= '0';
-			large_is_denorm <= '0';
-			large_norm_small_denorm <= '0';
-			small_is_nonzero <= '0';
-			exponent_diff <= (others =>'0');
-			minuend <= (others =>'0');
-			subtrahend <= (others =>'0');
-			subtra_shift <= (others =>'0');
-			subtra_shift_3 <= (others =>'0');
-			diff_shift_2 <= (others =>'0');
-			diff <= (others =>'0');
-			diffshift_gt_exponent <= '0';
-			diffshift_et_55 <= '0';
-			diff_1 <= (others =>'0');
-			exponent <= (others =>'0');
-			exponent_2 <= (others =>'0');
-			diff_2 <= (others =>'0');
-		elsif (enable = '1') then
-			exponent_a <= opa(62 downto 52);
-			exponent_b <= opb(62 downto 52);
-			mantissa_a <= opa(51 downto 0);
-			mantissa_b <= opb(51 downto 0);
-			if (exponent_a > exponent_b) then
-				expa_gt_expb <= '1';
-			else
+		
+	process(clk)
+		begin
+		if rising_edge(clk) then
+			if (rst = '1') then
+				exponent_a <= (others =>'0');
+				exponent_b <= (others =>'0');
+				mantissa_a <= (others =>'0');
+				mantissa_b <= (others =>'0');
 				expa_gt_expb <= '0';
-			end if;
-			if (exponent_a = exponent_b) then
-				expa_et_expb <= '1';
-			else
 				expa_et_expb <= '0';
-			end if;
-			if (mantissa_a >= mantissa_b) then
-				mana_gtet_manb <= '1';
-			else
 				mana_gtet_manb <= '0';
-			end if;
-			a_gtet_b <= expa_gt_expb or (expa_et_expb and mana_gtet_manb);
-			if (a_gtet_b = '1') then
-				exponent_small <= exponent_b;
-				exponent_large <= exponent_a;
-				mantissa_small <= mantissa_b;
-				mantissa_large <= mantissa_a;
-				sign <= opa(63);
-			else 
-				exponent_small <= exponent_a;
-				exponent_large <= exponent_b;
-				mantissa_small <= mantissa_a;
-				mantissa_large <= mantissa_b;
-				sign <= (not opb(63)) xor fpu_op_add;
-			end if;
-			if (unsigned(exponent_small) > 0) then
+				a_gtet_b <= '0';
+				exponent_small  <= (others =>'0');
+				exponent_large  <= (others =>'0');
+				mantissa_small  <= (others =>'0');
+				mantissa_large  <= (others =>'0');
+				sign <= '0';
 				small_is_denorm <= '0';
-			else
-				small_is_denorm <= '1';
-			end if;
-			if (unsigned(exponent_large) > 0) then
 				large_is_denorm <= '0';
-			else
-				large_is_denorm <= '1';
-			end if;
-			if (small_is_denorm = '1' and large_is_denorm = '0') then
-				large_norm_small_denorm <= '1';
-			else
-				large_norm_small_denorm <= '0';	
-			end if;
-			small_is_nonzero <= (not small_is_denorm) or or_reduce(mantissa_small);
-			exponent_diff <= std_logic_vector(unsigned(exponent_large) - unsigned(exponent_small) - unsigned'('0'&large_norm_small_denorm));
-			minuend <= not large_is_denorm & mantissa_large & "00";
-			subtrahend <= not small_is_denorm & mantissa_small & "00";
-			subtra_shift <= std_logic_vector(shift_right(unsigned(subtrahend),  to_integer(unsigned(exponent_diff))));
-			if (subtra_fraction_enable = '1') then
-				subtra_shift_3 <= subtra_shift_2;
-			else
-				subtra_shift_3 <= subtra_shift;
-			end if;
-			diff <= std_logic_vector(unsigned(minuend) - unsigned(subtra_shift_3));
-			diff_shift <= count_l_zeros(diff(54 downto 0));
-			diff_shift_2 <= diff_shift;
-			if (diff_shift_2 > exponent_large) then
-				diffshift_gt_exponent <= '1';
-			else
+				large_norm_small_denorm <= '0';
+				small_is_nonzero <= '0';
+				exponent_diff <= (others =>'0');
+				minuend <= (others =>'0');
+				subtrahend <= (others =>'0');
+				subtra_shift <= (others =>'0');
+				subtra_shift_3 <= (others =>'0');
+				diff_shift_2 <= (others =>'0');
+				diff <= (others =>'0');
 				diffshift_gt_exponent <= '0';
-			end if;
-			if (diff_shift_2 = "0110111") then -- 55
-				diffshift_et_55 <= '1';
-			else
 				diffshift_et_55 <= '0';
-			end if;
-			if (diffshift_gt_exponent = '1') then
-				diff_1 <= std_logic_vector(shift_left(unsigned(diff), to_integer(unsigned(exponent_large))));
-				exponent <= "00000000000";
-			else
-				diff_1 <= std_logic_vector(shift_left(unsigned(diff), to_integer(unsigned(diff_shift_2))));
-				exponent <= std_logic_vector(unsigned(exponent_large) - unsigned(diff_shift_2));
-			end if;
-			if (diffshift_et_55 = '1') then
-				exponent_2 <= "00000000000";
-			else
-				exponent_2 <=  exponent;
-			end if;
-			if (in_norm_out_denorm = '1') then
-				diff_2 <= '0' & std_logic_vector(shift_right(unsigned(diff_1), 1));
-			else
-				diff_2 <= '0' & diff_1;
+				diff_1 <= (others =>'0');
+				exponent <= (others =>'0');
+				exponent_2 <= (others =>'0');
+				diff_2 <= (others =>'0');
+			elsif (enable = '1') then
+				exponent_a <= opa(62 downto 52);
+				exponent_b <= opb(62 downto 52);
+				mantissa_a <= opa(51 downto 0);
+				mantissa_b <= opb(51 downto 0);
+				if (exponent_a > exponent_b) then
+					expa_gt_expb <= '1';
+				else
+					expa_gt_expb <= '0';
+				end if;
+				if (exponent_a = exponent_b) then
+					expa_et_expb <= '1';
+				else
+					expa_et_expb <= '0';
+				end if;
+				if (mantissa_a >= mantissa_b) then
+					mana_gtet_manb <= '1';
+				else
+					mana_gtet_manb <= '0';
+				end if;
+				a_gtet_b <= expa_gt_expb or (expa_et_expb and mana_gtet_manb);
+				if (a_gtet_b = '1') then
+					exponent_small <= exponent_b;
+					exponent_large <= exponent_a;
+					mantissa_small <= mantissa_b;
+					mantissa_large <= mantissa_a;
+					sign <= opa(63);
+				else 
+					exponent_small <= exponent_a;
+					exponent_large <= exponent_b;
+					mantissa_small <= mantissa_a;
+					mantissa_large <= mantissa_b;
+					sign <= (not opb(63)) xor fpu_op_add;
+				end if;
+				if (unsigned(exponent_small) > 0) then
+					small_is_denorm <= '0';
+				else
+					small_is_denorm <= '1';
+				end if;
+				if (unsigned(exponent_large) > 0) then
+					large_is_denorm <= '0';
+				else
+					large_is_denorm <= '1';
+				end if;
+				if (small_is_denorm = '1' and large_is_denorm = '0') then
+					large_norm_small_denorm <= '1';
+				else
+					large_norm_small_denorm <= '0';	
+				end if;
+				small_is_nonzero <= (not small_is_denorm) or or_reduce(mantissa_small);
+				exponent_diff <= std_logic_vector(unsigned(exponent_large) - unsigned(exponent_small) - unsigned'('0'&large_norm_small_denorm));
+				minuend <= not large_is_denorm & mantissa_large & "00";
+				subtrahend <= not small_is_denorm & mantissa_small & "00";
+				subtra_shift <= std_logic_vector(shift_right(unsigned(subtrahend),  to_integer(unsigned(exponent_diff))));
+				if (subtra_fraction_enable = '1') then
+					subtra_shift_3 <= subtra_shift_2;
+				else
+					subtra_shift_3 <= subtra_shift;
+				end if;
+				diff <= std_logic_vector(unsigned(minuend) - unsigned(subtra_shift_3));
+				diff_shift <= count_l_zeros(diff(54 downto 0));
+				diff_shift_2 <= diff_shift;
+				if (diff_shift_2 > exponent_large) then
+					diffshift_gt_exponent <= '1';
+				else
+					diffshift_gt_exponent <= '0';
+				end if;
+				if (diff_shift_2 = "0110111") then -- 55
+					diffshift_et_55 <= '1';
+				else
+					diffshift_et_55 <= '0';
+				end if;
+				if (diffshift_gt_exponent = '1') then
+					diff_1 <= std_logic_vector(shift_left(unsigned(diff), to_integer(unsigned(exponent_large))));
+					exponent <= "00000000000";
+				else
+					diff_1 <= std_logic_vector(shift_left(unsigned(diff), to_integer(unsigned(diff_shift_2))));
+					exponent <= std_logic_vector(unsigned(exponent_large) - unsigned(diff_shift_2));
+				end if;
+				if (diffshift_et_55 = '1') then
+					exponent_2 <= "00000000000";
+				else
+					exponent_2 <=  exponent;
+				end if;
+				if (in_norm_out_denorm = '1') then
+					diff_2 <= '0' & std_logic_vector(shift_right(unsigned(diff_1), 1));
+				else
+					diff_2 <= '0' & diff_1;
+				end if;
 			end if;
 		end if;
-	end if;
 	end process;
 
 	end rtl;
