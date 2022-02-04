@@ -242,9 +242,6 @@
 			else
 				mul_enable <= '0';
 			end if;
-			else
-				div_enable <= '0';
-			end if;  -- div_enable needs to be high for two clock cycles
 			if add_enable = '1' then
 				addsub_out <= sum_out;
 				addsub_sign <= add_sign;
