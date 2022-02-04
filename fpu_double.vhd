@@ -139,10 +139,10 @@
 		clk => clk , rst => rst , enable => mul_enable , opa => opa_reg , opb => opb_reg , 
 		sign => mul_sign , product_7 => mul_out , exponent_5 => exp_mul_out);	
 	
-	i_fpu_div: fpu_div 
-		port map (
-		clk => clk , rst => rst , enable => div_enable , opa => opa_reg , opb => opb_reg , 
-		sign => div_sign , mantissa_7 => div_out , exponent_out => exp_div_out);	
+	-- i_fpu_div: fpu_div 
+	-- 	port map (
+	-- 	clk => clk , rst => rst , enable => div_enable , opa => opa_reg , opb => opb_reg , 
+	-- 	sign => div_sign , mantissa_7 => div_out , exponent_out => exp_div_out);	
 	
 	i_fpu_round: fpu_round 
 		port map (
@@ -347,7 +347,7 @@
 			ready_0 <= '0';
 			ready_1 <= '0';
 			ready <= '0';	 
-		else 
+		elsif (rst = '0' and enable_reg_1 = '0') then 
 			ready_0 <= not count_busy;
 			ready_1 <= ready_0;
 			ready <= ready_1;  
