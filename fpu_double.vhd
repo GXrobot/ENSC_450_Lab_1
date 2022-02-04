@@ -129,7 +129,7 @@
 		ex_enable => except_enable , underflow => underflow_0 , overflow => overflow_0 , 
 		inexact => inexact_0 , exception => exception_0 , invalid => invalid_0); 
 
-	process(fpu_op_reg, opa_reg, opb_reg)
+	process(fpu_op_reg, opa_reg, opb_reg, count_ready, count_cycles)
 		begin
 		--count_busy <= '1' when (count_ready <= count_cycles) else '0';
 		if (count_ready <= count_cycles) then
