@@ -127,64 +127,90 @@ signal   exp_diff_int : integer;
 				exponent <= (others =>'0');
 				denorm_to_norm <= '0';
 				exponent_2 <= (others =>'0');
-			elsif (enable = '1') then
-				sign <= opa(63);
-				exponent_a <= opa(62 downto 52);
-				exponent_b <= opb(62 downto 52);
-				mantissa_a <= opa(51 downto 0);
-				mantissa_b <= opb(51 downto 0);
-				if (exponent_a > exponent_b) then
-					exponent_small <= exponent_b;
-					exponent_large <= exponent_a;
-					mantissa_small <= mantissa_b;
-					mantissa_large <= mantissa_a;
-				else 
-					exponent_small <= exponent_a;
-					exponent_large <= exponent_b;
-					mantissa_small <= mantissa_a;
-					mantissa_large <= mantissa_b;
-				end if;
-				if (unsigned(exponent_small) > 0) then
+			else
+				if (enable = '1') then
+					sign <= opa(63);
+					exponent_a <= opa(62 downto 52);
+					exponent_b <= opb(62 downto 52);
+					mantissa_a <= opa(51 downto 0);
+					mantissa_b <= opb(51 downto 0);
+					if (exponent_a > exponent_b) then
+						exponent_small <= exponent_b;
+						exponent_large <= exponent_a;
+						mantissa_small <= mantissa_b;
+						mantissa_large <= mantissa_a;
+					else 
+						exponent_small <= exponent_a;
+						exponent_large <= exponent_b;
+						mantissa_small <= mantissa_a;
+						mantissa_large <= mantissa_b;
+					end if;
+					if (unsigned(exponent_small) > 0) then
+						small_is_denorm <= '0';
+					else
+						small_is_denorm <= '1';
+					end if;
+					if (unsigned(exponent_large) > 0) then
+						large_is_denorm <= '0';
+					else
+						large_is_denorm <= '1';
+					end if;
+					if (small_is_denorm = '1' and large_is_denorm = '0') then
+						large_norm_small_denorm <= "00000000001";
+					else
+						large_norm_small_denorm <= "00000000000";	
+					end if;
+					exponent_diff <= std_logic_vector(unsigned(exponent_large) - unsigned(exponent_small) - unsigned(large_norm_small_denorm));
+					large_add <= '0' & not large_is_denorm & mantissa_large & "00";
+					small_add <= '0' & not small_is_denorm & mantissa_small & "00";
+					small_shift <= std_logic_vector(SHIFT_RIGHT(unsigned(small_add), to_integer(unsigned(exponent_diff))));
+					if (small_fraction_enable = '1') then
+						small_shift_3 <= small_shift_2;
+					else
+						small_shift_3 <= small_shift;
+					end if;
+					sum <= std_logic_vector(unsigned(large_add) + unsigned(small_shift_3));
+					if (sum_overflow = '1') then
+						sum_2 <= std_logic_vector(SHIFT_RIGHT(unsigned(sum), 1));
+					else
+						sum_2 <= sum;
+					end if;
+					sum_3 <= sum_2;
+					if (sum_overflow = '1') then
+						exponent <=  std_logic_vector(unsigned(exponent_large) + 1);
+					else
+						exponent <=  exponent_large;
+					end if;
+					denorm_to_norm <= sum_leading_one and large_is_denorm;
+					if (denorm_to_norm = '1') then
+						exponent_2 <= std_logic_vector(unsigned(exponent) + 1);
+					else
+						exponent_2 <= exponent;
+					end if;
+				else
+					sign <= '0';
+					exponent_a <= (others =>'0');
+					exponent_b <= (others =>'0');
+					mantissa_a <= (others =>'0');
+					mantissa_b <= (others =>'0');
+					exponent_small  <= (others =>'0');
+					exponent_large  <= (others =>'0');
+					mantissa_small  <= (others =>'0');
+					mantissa_large  <= (others =>'0');
 					small_is_denorm <= '0';
-				else
-					small_is_denorm <= '1';
-				end if;
-				if (unsigned(exponent_large) > 0) then
 					large_is_denorm <= '0';
-				else
-					large_is_denorm <= '1';
-				end if;
-				if (small_is_denorm = '1' and large_is_denorm = '0') then
-					large_norm_small_denorm <= "00000000001";
-				else
-					large_norm_small_denorm <= "00000000000";	
-				end if;
-				exponent_diff <= std_logic_vector(unsigned(exponent_large) - unsigned(exponent_small) - unsigned(large_norm_small_denorm));
-				large_add <= '0' & not large_is_denorm & mantissa_large & "00";
-				small_add <= '0' & not small_is_denorm & mantissa_small & "00";
-				small_shift <= std_logic_vector(SHIFT_RIGHT(unsigned(small_add), to_integer(unsigned(exponent_diff))));
-				if (small_fraction_enable = '1') then
-					small_shift_3 <= small_shift_2;
-				else
-					small_shift_3 <= small_shift;
-				end if;
-				sum <= std_logic_vector(unsigned(large_add) + unsigned(small_shift_3));
-				if (sum_overflow = '1') then
-					sum_2 <= std_logic_vector(SHIFT_RIGHT(unsigned(sum), 1));
-				else
-					sum_2 <= sum;
-				end if;
-				sum_3 <= sum_2;
-				if (sum_overflow = '1') then
-					exponent <=  std_logic_vector(unsigned(exponent_large) + 1);
-				else
-					exponent <=  exponent_large;
-				end if;
-				denorm_to_norm <= sum_leading_one and large_is_denorm;
-				if (denorm_to_norm = '1') then
-					exponent_2 <= std_logic_vector(unsigned(exponent) + 1);
-				else
-					exponent_2 <= exponent;
+					large_norm_small_denorm <= (others =>'0');
+					exponent_diff <= (others =>'0');
+					large_add <= (others =>'0');
+					small_add <= (others =>'0');
+					small_shift <= (others =>'0');
+					small_shift_3 <= (others =>'0');
+					sum <= (others =>'0');
+					sum_2 <= (others =>'0');
+					sum_3 <= (others =>'0');
+					exponent <= (others =>'0');
+					denorm_to_norm <= '0';
+					exponent_2 <= (others =>'0');
 				end if;
 			end if;
 		end if;
