@@ -127,7 +127,7 @@ signal   exp_diff_int : integer;
 				exponent <= (others =>'0');
 				denorm_to_norm <= '0';
 				exponent_2 <= (others =>'0');
-			else
+			elsif (rst = '0')
 				if (enable = '1') then
 					sign <= opa(63);
 					exponent_a <= opa(62 downto 52);
@@ -187,7 +187,7 @@ signal   exp_diff_int : integer;
 					else
 						exponent_2 <= exponent;
 					end if;
-				else
+				elsif (enable = '0')
 					sign <= '0';
 					exponent_a <= (others =>'0');
 					exponent_b <= (others =>'0');

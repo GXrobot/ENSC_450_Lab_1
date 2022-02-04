@@ -152,7 +152,7 @@
 				exponent_final <= (others =>'0'); 
 				exponent_final_2 <= (others =>'0');
 				round_out <= (others =>'0');
-		else
+		elsif (rst = '0') then
 				sum_round <= std_logic_vector(unsigned(rounding_amount) + unsigned(mantissa_term));
 				if sum_round_overflow = '1' then
 					sum_round_2 <= std_logic_vector(SHIFT_RIGHT(unsigned(sum_round), 1));

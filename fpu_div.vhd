@@ -216,7 +216,7 @@ process(clk)
 	if rising_edge(clk) then
 		if (rst = '1') then
 			exponent_out <= (others =>'0');
-		else 
+		elsif (rst = '0') then 
 			if (a_is_zero = '1') then
 				exponent_out <= "000000000000";
 			else
@@ -245,7 +245,7 @@ process(clk)
 		if (rst = '1') then
 			quotient_out <= (others =>'0');
 			remainder_out <= (others =>'0');
-		else 
+		elsif (rst = '0') then 
 			quotient_out <= quotient;
 			remainder_out <= remainder;
 		end if;
@@ -439,7 +439,7 @@ process(clk)
 			enable_signal_c <= '0';
 			enable_signal_d <= '0';
 			enable_signal_e <= '0';
-		else 
+		elsif (rst = '0') 
 			count_nonzero_signal <= count_nonzero;	 
 			count_nonzero_signal_2 <= count_nonzero_signal;
 			enable_signal <= enable_signal_e;

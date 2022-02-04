@@ -158,11 +158,15 @@
 		mantissa_in => mantissa_round(1 downto 0) , fpu_op => fpu_op_reg , out_fp => out_except , 
 		ex_enable => except_enable , underflow => underflow_0 , overflow => overflow_0 , 
 		inexact => inexact_0 , exception => exception_0 , invalid => invalid_0);
-			
-	count_busy <= '1' when (count_ready <= count_cycles) else '0';	 
 
-	process(fpu_op_reg, opa_reg, opb_reg)
+	process(fpu_op_reg, opa_reg, opb_reg, count_ready, count_cycles)
 		begin
+		--count_busy <= '1' when (count_ready <= count_cycles) else '0';
+		if (count_ready <= count_cycles) then
+			count_busy <= '1';
+		else
+			count_busy <= '0';
+		end if;
 		--add_enable_0  <= '1' when fpu_op_reg = "000" and (opa_reg(63) xor opb_reg(63)) = '0' else '0';
 		if (fpu_op_reg = "000" and (opa_reg(63) xor opb_reg(63)) = '0') then
 			add_enable_0 <= '1';
@@ -197,7 +201,7 @@
 			exponent_round <= (others =>'0');
 			sign_round <= '0';
 			count_cycles <= (others =>'0');
-		else
+		elsif(rst = '0') then
 			if (fpu_op_reg = "000") then -- add
 				mantissa_round <= addsub_out;
 				exponent_round <= exp_addsub;
@@ -241,7 +245,7 @@
 			addsub_out <= (others =>'0');
 			addsub_sign <= '0';
 			exp_addsub <= (others =>'0');
-		else 
+		elsif(rst = '0') then
 			if ((add_enable_0 = '1' or add_enable_1 = '1') and op_enable= '1') then
 				add_enable <= '1';
 			else
@@ -296,7 +300,7 @@
 			enable_reg_1 <= '0';
 			enable_reg_2 <= '0';	   
 			enable_reg_3 <= '0';
-		else
+		elsif(rst = '0') then
 			enable_reg <= enable;
 			if enable = '1' and enable_reg = '0' then
 				enable_reg_1 <= '1';
@@ -343,7 +347,7 @@
 			ready_0 <= '0';
 			ready_1 <= '0';
 			ready <= '0';	 
-		else 
+		elsif (enable_reg_1 = '0') then
 			ready_0 <= not count_busy;
 			ready_1 <= ready_0;
 			ready <= ready_1;  
