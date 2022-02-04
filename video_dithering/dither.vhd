@@ -64,7 +64,11 @@ begin
             
             for c in 1 to 3 loop
 
-               if (intermediate_color(c)(8) = '1') then intermediate_color(c) := '0' & to_unsigned((2**color_width) - 1, color_width); end if;
+               if (intermediate_color(c)(8) = '1') then 
+                  intermediate_color(c) := '0' & to_unsigned((2**color_width) - 1, color_width); 
+               else
+                  intermediate_color(c) := intermediate_color(c);
+               end if;
             
                dither_buffer_next(c) <= "0" & intermediate_color(c)(dither_bits-1 downto 1); 
                dither_buffer_newline(c) <= "00" & intermediate_color(c)(dither_bits-1 downto 2);
@@ -99,6 +103,8 @@ begin
          -- line buffer memory
          if (WEA = '1') then
             dither_buffer(AddrA) <= dither_buffer_toRam(1) & dither_buffer_toRam(2) & dither_buffer_toRam(3);
+         else
+            dither_buffer(AddrA) <= dither_buffer(AddrA);
          end if;
          
          dither_buffer_fromRam(1) <= dither_buffer(AddrB)((dither_bits * 3)-1 downto (dither_bits * 2));
