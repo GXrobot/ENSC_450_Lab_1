@@ -9,12 +9,10 @@ vlib work
 vmap work work
 
 # Compiling the VHDL code for simulation
-vcom ../vhdl/fpupack.vhd
-vcom ../vhdl/comppack.vhd
 vcom ../vhdl/fpu_add.vhd
-#vcom ../vhdl/fpu_div.vhd
+vcom ../vhdl/fpu_div.vhd
 vcom ../vhdl/fpu_exceptions.vhd
-#vcom ../vhdl/fpu_mul.vhd
+vcom ../vhdl/fpu_mul.vhd
 vcom ../vhdl/fpu_round.vhd
 vcom ../vhdl/fpu_sub.vhd
 vcom ../vhdl/fpu_double.vhd

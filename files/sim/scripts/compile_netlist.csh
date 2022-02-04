@@ -11,8 +11,6 @@ vmap work work
 # Compiling the VHDL code for simulation
 vlog /CMC/setups/ensc450/SOCLAB/LIBRARIES/NangateOpenCellLibrary_PDKv1_3_v2010_12/Front_End/Verilog/NangateOpenCellLibrary.v
 vlog ../syn_045/results/fpu_double.ref.v 
-vcom ../vhdl/fpupack.vhd
-vcom ../vhdl/comppack.vhd
 vcom ../vhdl/fpu_add.vhd
 vcom ../vhdl/fpu_sub.vhd
 vcom ../vhdl/fpu_mul.vhd
