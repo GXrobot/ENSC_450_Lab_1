@@ -195,10 +195,6 @@
 				addsub_out <= sum_out;
 				addsub_sign <= add_sign;
 				exp_addsub <= '0' & exp_add_out;
-			else
-				addsub_out <= diff_out;
-				addsub_sign <= sub_sign;
-				exp_addsub <= '0' & exp_sub_out;
 			end if;
 		end if;
 	end if;
