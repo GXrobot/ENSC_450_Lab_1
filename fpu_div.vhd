@@ -150,22 +150,62 @@
 			dividend_1 <= '0' & dividend_denorm;
 		end if;
 		divisor_denorm  <= divisor_b_shifted & '0';
-		divisor_1  <= "01" & divisor_b when b_is_norm = '1' else '0' & divisor_denorm;
-		count_nonzero  <= '0' when count_index = "000000" else '1';	  
+		--divisor_1  <= "01" & divisor_b when b_is_norm = '1' else '0' & divisor_denorm;
+		if (b_is_norm = '1') then
+			divisor_1 <= "01" & divisor_b;
+		else
+			divisor_1 <= '0' & divisor_denorm;
+		end if;
+		--count_nonzero  <= '0' when count_index = "000000" else '1';	  
+		if (count_index = "000000") then
+			count_nonzero <= '0';
+		else
+			count_nonzero <= '1';
+		end if;
 		count_index <= count_out;
 		quotient_msb  <= quotient_out(53);
 		mantissa_2  <= quotient_out(52 downto 1);
 		mantissa_3  <= quotient_out(51 downto 0);
-		mantissa_4  <= mantissa_2 when quotient_msb = '1' else  mantissa_3;
-		mantissa_5  <= mantissa_2 when expon_final_4 = "000000000001" else  mantissa_4;
-        mantissa_6  <= mantissa_1 when expon_final_4_et0 = '1' else mantissa_5;
+		--mantissa_4  <= mantissa_2 when quotient_msb = '1' else  mantissa_3;
+		if (quotient_msb = '1') then
+			mantissa_4 <= mantissa_2;
+		else
+			mantissa_4 <= mantissa_3;
+		end if;
+		--mantissa_5  <= mantissa_2 when expon_final_4 = "000000000001" else  mantissa_4;
+		if (expon_final_4 = "000000000001") then
+			mantissa_5 <= mantissa_2;
+		else
+			mantissa_5 <= mantissa_4;
+		end if;
+        --mantissa_6  <= mantissa_1 when expon_final_4_et0 = '1' else mantissa_5;
+		if (expon_final_4_et0 = '1') then
+			mantissa_6 <= mantissa_1;
+		else
+			mantissa_6 <= mantissa_5;
+		end if;
 		remainder_a  <=  quotient_out(53 downto 0) & remainder_msb & remainder_out(52 downto 0);
 		remainder_1  <= remainder_b(107 downto 52);
 		remainder_2  <= quotient_out(0) & remainder_msb & remainder_out(52 downto 0) & '0' ;
 		remainder_3  <=  remainder_msb & remainder_out(52 downto 0) & "00" ;
-		remainder_4  <=  remainder_2 when quotient_msb = '1' else remainder_3;
-		remainder_5  <=  remainder_2 when expon_final_4 = "000000000001" else remainder_4;
-		remainder_6  <= remainder_1 when expon_final_4_et0 = '1' else remainder_5;
+		--remainder_4  <=  remainder_2 when quotient_msb = '1' else remainder_3;
+		if (quotient_msb = '1') then
+			remainder_4 <= remainder_2;
+		else
+			remainder_4 <= remainder_3;
+		end if;	
+		--remainder_5  <=  remainder_2 when expon_final_4 = "000000000001" else remainder_4;
+		if (expon_final_4 = "000000000001") then
+			remainder_5 <= remainder_2;
+		else
+			remainder_5 <= remainder_4;
+		end if;
+		--remainder_6  <= remainder_1 when expon_final_4_et0 = '1' else remainder_5;
+		if (expon_final_4_et0 = '1') then
+			remainder_6 <= remainder_1;
+		else
+			remainder_6 <= remainder_5;
+		end if;
 		m_norm  <= or_reduce(expon_final_5);
 		rem_lsb <= or_reduce(remainder_6(54 downto 0));	
 		mantissa_7  <=  '0' & m_norm & mantissa_6 & remainder_6(55) & rem_lsb ;
