@@ -147,7 +147,7 @@
 		if (a_is_norm = '1') then
 			dividend_1 <= "01" & dividend_a;
 		else
-			dividend_1 <= '0' & dividend_norm;
+			dividend_1 <= '0' & dividend_denorm;
 		end if;
 		divisor_denorm  <= divisor_b_shifted & '0';
 		divisor_1  <= "01" & divisor_b when b_is_norm = '1' else '0' & divisor_denorm;
