@@ -1,0 +1,384 @@
+Information: Updating graph... (UID-83)
+Warning: Design 'fpu_double' contains 1 high-fanout nets. A fanout number of 1000 will be used for delay calculations involving these nets. (TIM-134)
+ 
+****************************************
+Report : reference
+Design : fpu_double
+Version: O-2018.06-SP5
+Date   : Thu Feb  3 22:59:19 2022
+****************************************
+
+Attributes:
+    b - black box (unknown)
+   bo - allows boundary optimization
+    d - dont_touch
+   mo - map_only
+    h - hierarchical
+    n - noncombinational
+    r - removable
+    s - synthetic operator
+    u - contains unmapped logic
+
+Reference          Library       Unit Area   Count    Total Area   Attributes
+-----------------------------------------------------------------------------
+AND2_X1            NangateOpenCellLibrary
+                                  1.064000     154    163.856002  
+AND2_X2            NangateOpenCellLibrary
+                                  1.330000      10     13.300000  
+AND2_X4            NangateOpenCellLibrary
+                                  2.394000       2      4.788000  
+AOI21_X1           NangateOpenCellLibrary
+                                  1.064000       2      2.128000  
+AOI22_X1           NangateOpenCellLibrary
+                                  1.330000     132    175.560006  
+AOI211_X1          NangateOpenCellLibrary
+                                  1.330000       1      1.330000  
+AOI222_X1          NangateOpenCellLibrary
+                                  2.128000      67    142.576001  
+CLKBUF_X1          NangateOpenCellLibrary
+                                  0.798000      12      9.576000  
+CLKBUF_X2          NangateOpenCellLibrary
+                                  1.064000      10     10.640000  
+CLKBUF_X3          NangateOpenCellLibrary
+                                  1.330000       2      2.660000  
+DFF_X1             NangateOpenCellLibrary
+                                  4.522000     362   1636.963941  n
+INV_X1             NangateOpenCellLibrary
+                                  0.532000     222    118.104001  
+INV_X2             NangateOpenCellLibrary
+                                  0.798000      14     11.172000  
+INV_X4             NangateOpenCellLibrary
+                                  1.330000       5      6.650000  
+MUX2_X1            NangateOpenCellLibrary
+                                  1.862000     210    391.019998  
+NAND2_X1           NangateOpenCellLibrary
+                                  0.798000       3      2.394000  
+NAND2_X2           NangateOpenCellLibrary
+                                  1.330000       5      6.650000  
+NAND2_X4           NangateOpenCellLibrary
+                                  2.394000       1      2.394000  
+NAND3_X1           NangateOpenCellLibrary
+                                  1.064000       1      1.064000  
+NOR2_X1            NangateOpenCellLibrary
+                                  0.798000       7      5.586000  
+NOR3_X1            NangateOpenCellLibrary
+                                  1.064000       2      2.128000  
+OAI21_X1           NangateOpenCellLibrary
+                                  1.064000       3      3.192000  
+OAI22_X1           NangateOpenCellLibrary
+                                  1.330000       3      3.990000  
+OR2_X1             NangateOpenCellLibrary
+                                  1.064000       1      1.064000  
+OR2_X2             NangateOpenCellLibrary
+                                  1.330000      23     30.590001  
+OR3_X1             NangateOpenCellLibrary
+                                  1.330000       1      1.330000  
+SDFF_X1            NangateOpenCellLibrary
+                                  6.118000       2     12.236000  n
+XOR2_X1            NangateOpenCellLibrary
+                                  1.596000       1      1.596000  
+fpu_add                        5655.159922       1   5655.159922  h, n
+fpu_div                       13782.523919       1  13782.523919  h, n
+fpu_double_DW01_inc_0            15.428000       1     15.428000  h
+fpu_exceptions                 3295.739939       1   3295.739939  h, n
+fpu_mul                       29707.943828       1  29707.943828  h, n
+fpu_round                      1671.543981       1   1671.543981  h, n
+fpu_sub                        8168.593937       1   8168.593937  h, n
+-----------------------------------------------------------------------------
+Total 35 references                                 65061.471477
+1
+Information: Updating design information... (UID-85)
+Warning: Design 'fpu_double' contains 1 high-fanout nets. A fanout number of 1000 will be used for delay calculations involving these nets. (TIM-134)
+ 
+****************************************
+Report : timing
+        -path full
+        -delay max
+        -max_paths 1
+        -transition_time
+        -capacitance
+Design : fpu_double
+Version: O-2018.06-SP5
+Date   : Thu Feb  3 22:59:20 2022
+****************************************
+
+ # A fanout number of 1000 was used for high fanout net computations.
+
+Operating Conditions: slow   Library: NangateOpenCellLibrary
+Wire Load Model Mode: top
+
+  Startpoint: i_fpu_sub/diff_reg[53]
+              (rising edge-triggered flip-flop clocked by CLK)
+  Endpoint: i_fpu_sub/diff_shift_reg[4]
+            (rising edge-triggered flip-flop clocked by CLK)
+  Path Group: CLK
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  fpu_double         5K_hvratio_1_1        NangateOpenCellLibrary
+
+  Point                                          Cap     Trans      Incr       Path
+  ------------------------------------------------------------------------------------
+  clock CLK (rise edge)                                             0.00       0.00
+  clock network delay (ideal)                                       0.00       0.00
+  i_fpu_sub/diff_reg[53]/CK (DFF_X1)                      0.00      0.00 #     0.00 r
+  i_fpu_sub/diff_reg[53]/QN (DFF_X1)           11.23      0.06      0.28       0.28 f
+  i_fpu_sub/U3221/ZN (NAND2_X1)                 7.42      0.08      0.15       0.43 r
+  i_fpu_sub/U3220/ZN (OAI21_X1)                 3.67      0.04      0.10       0.52 f
+  i_fpu_sub/U3219/ZN (INV_X1)                   3.80      0.04      0.09       0.61 r
+  i_fpu_sub/U3218/ZN (NAND2_X1)                 2.98      0.04      0.06       0.67 f
+  i_fpu_sub/U3197/ZN (AND2_X1)                  3.58      0.02      0.12       0.79 f
+  i_fpu_sub/U3196/ZN (NOR3_X1)                  6.88      0.25      0.35       1.14 r
+  i_fpu_sub/U3193/ZN (NOR2_X1)                  4.57      0.06      0.09       1.24 f
+  i_fpu_sub/add_55_I5_C207_rn/U1_1_1/CO (HA_X1)
+                                                3.57      0.02      0.15       1.38 f
+  i_fpu_sub/add_55_I5_C207_rn/U1_1_2/S (HA_X1)
+                                                1.18      0.06      0.22       1.60 f
+  i_fpu_sub/U3172/Z (MUX2_X1)                   4.57      0.04      0.27       1.87 f
+  i_fpu_sub/add_55_I6_C207_rn/U1_1_2/S (HA_X1)
+                                                1.19      0.03      0.21       2.08 f
+  i_fpu_sub/U3170/Z (MUX2_X1)                   6.40      0.05      0.26       2.34 f
+  i_fpu_sub/add_55_I7_C207_rn/U1_1_2/S (HA_X1)
+                                                1.18      0.03      0.21       2.56 f
+  i_fpu_sub/U3169/Z (MUX2_X1)                   6.53      0.05      0.26       2.82 f
+  i_fpu_sub/add_55_I8_C207_rn/U1_1_2/S (HA_X1)
+                                                1.18      0.03      0.21       3.04 f
+  i_fpu_sub/U3168/Z (MUX2_X1)                   6.39      0.05      0.26       3.30 f
+  i_fpu_sub/add_55_I9_C207_rn/U1_1_2/S (HA_X1)
+                                                1.18      0.03      0.21       3.51 f
+  i_fpu_sub/U3167/Z (MUX2_X1)                   6.47      0.05      0.26       3.78 f
+  i_fpu_sub/add_55_I10_C207_rn/U1_1_2/S (HA_X1)
+                                                1.19      0.03      0.21       3.99 f
+  i_fpu_sub/U3165/Z (MUX2_X1)                   6.40      0.05      0.26       4.26 f
+  i_fpu_sub/add_55_I11_C207_rn/U1_1_2/S (HA_X1)
+                                                1.18      0.03      0.21       4.47 f
+  i_fpu_sub/U3164/Z (MUX2_X1)                   6.49      0.05      0.26       4.73 f
+  i_fpu_sub/add_55_I12_C207_rn/U1_1_2/S (HA_X1)
+                                                1.18      0.03      0.21       4.95 f
+  i_fpu_sub/U3163/Z (MUX2_X1)                   6.43      0.05      0.26       5.21 f
+  i_fpu_sub/add_55_I13_C207_rn/U1_1_2/S (HA_X1)
+                                                1.18      0.03      0.21       5.43 f
+  i_fpu_sub/U3162/Z (MUX2_X1)                   6.48      0.05      0.26       5.69 f
+  i_fpu_sub/add_55_I14_C207_rn/U1_1_2/S (HA_X1)
+                                                1.18      0.03      0.21       5.90 f
+  i_fpu_sub/U3161/Z (MUX2_X1)                   6.49      0.05      0.26       6.17 f
+  i_fpu_sub/add_55_I15_C207_rn/U1_1_2/S (HA_X1)
+                                                1.19      0.03      0.21       6.38 f
+  i_fpu_sub/U3159/Z (MUX2_X1)                   6.48      0.05      0.26       6.65 f
+  i_fpu_sub/add_55_I16_C207_rn/U1_1_2/S (HA_X1)
+                                                1.18      0.03      0.21       6.86 f
+  i_fpu_sub/U3158/Z (MUX2_X1)                   6.51      0.05      0.26       7.12 f
+  i_fpu_sub/add_55_I17_C207_rn/U1_1_2/S (HA_X1)
+                                                1.18      0.03      0.21       7.34 f
+  i_fpu_sub/U3157/Z (MUX2_X1)                   6.40      0.05      0.26       7.60 f
+  i_fpu_sub/add_55_I18_C207_rn/U1_1_2/S (HA_X1)
+                                                1.18      0.03      0.21       7.82 f
+  i_fpu_sub/U3156/Z (MUX2_X1)                   6.51      0.05      0.26       8.08 f
+  i_fpu_sub/add_55_I19_C207_rn/U1_1_2/S (HA_X1)
+                                                1.18      0.03      0.21       8.29 f
+  i_fpu_sub/U3155/Z (MUX2_X1)                   6.48      0.05      0.26       8.56 f
+  i_fpu_sub/add_55_I20_C207_rn/U1_1_2/S (HA_X1)
+                                                1.18      0.03      0.21       8.77 f
+  i_fpu_sub/U3154/Z (MUX2_X1)                   6.49      0.05      0.26       9.04 f
+  i_fpu_sub/add_55_I21_C207_rn/U1_1_2/S (HA_X1)
+                                                1.19      0.03      0.21       9.25 f
+  i_fpu_sub/U3152/Z (MUX2_X1)                   6.48      0.05      0.26       9.51 f
+  i_fpu_sub/add_55_I22_C207_rn/U1_1_2/S (HA_X1)
+                                                1.18      0.03      0.21       9.73 f
+  i_fpu_sub/U3151/Z (MUX2_X1)                   6.51      0.05      0.26       9.99 f
+  i_fpu_sub/add_55_I23_C207_rn/U1_1_2/S (HA_X1)
+                                                1.18      0.03      0.21      10.21 f
+  i_fpu_sub/U3146/Z (MUX2_X1)                   6.40      0.05      0.26      10.47 f
+  i_fpu_sub/add_55_I24_C207_rn/U1_1_2/S (HA_X1)
+                                                1.18      0.03      0.21      10.68 f
+  i_fpu_sub/U3140/Z (MUX2_X1)                   6.51      0.05      0.26      10.95 f
+  i_fpu_sub/add_55_I25_C207_rn/U1_1_2/S (HA_X1)
+                                                1.18      0.03      0.21      11.16 f
+  i_fpu_sub/U3133/Z (MUX2_X1)                   6.48      0.05      0.26      11.43 f
+  i_fpu_sub/add_55_I26_C207_rn/U1_1_2/S (HA_X1)
+                                                1.18      0.03      0.21      11.64 f
+  i_fpu_sub/U3127/Z (MUX2_X1)                   6.49      0.05      0.26      11.90 f
+  i_fpu_sub/add_55_I27_C207_rn/U1_1_2/S (HA_X1)
+                                                1.19      0.03      0.21      12.12 f
+  i_fpu_sub/U3121/Z (MUX2_X1)                   6.48      0.05      0.26      12.38 f
+  i_fpu_sub/add_55_I28_C207_rn/U1_1_2/S (HA_X1)
+                                                1.18      0.03      0.21      12.60 f
+  i_fpu_sub/U3115/Z (MUX2_X1)                   6.51      0.05      0.26      12.86 f
+  i_fpu_sub/add_55_I29_C207_rn/U1_1_2/S (HA_X1)
+                                                1.18      0.03      0.21      13.07 f
+  i_fpu_sub/U3109/Z (MUX2_X1)                   6.40      0.05      0.26      13.34 f
+  i_fpu_sub/add_55_I30_C207_rn/U1_1_2/S (HA_X1)
+                                                1.18      0.03      0.21      13.55 f
+  i_fpu_sub/U3103/Z (MUX2_X1)                   6.51      0.05      0.26      13.82 f
+  i_fpu_sub/add_55_I31_C207_rn/U1_1_2/S (HA_X1)
+                                                1.18      0.03      0.21      14.03 f
+  i_fpu_sub/U3096/Z (MUX2_X1)                   6.48      0.05      0.26      14.29 f
+  i_fpu_sub/add_55_I32_C207_rn/U1_1_2/S (HA_X1)
+                                                1.18      0.03      0.21      14.51 f
+  i_fpu_sub/U3091/Z (MUX2_X1)                   6.49      0.05      0.26      14.77 f
+  i_fpu_sub/add_55_I33_C207_rn/U1_1_2/S (HA_X1)
+                                                1.19      0.03      0.21      14.99 f
+  i_fpu_sub/U3085/Z (MUX2_X1)                   6.48      0.05      0.26      15.25 f
+  i_fpu_sub/add_55_I34_C207_rn/U1_1_2/S (HA_X1)
+                                                1.18      0.03      0.21      15.46 f
+  i_fpu_sub/U3079/Z (MUX2_X1)                   6.51      0.05      0.26      15.73 f
+  i_fpu_sub/add_55_I35_C207_rn/U1_1_2/S (HA_X1)
+                                                1.18      0.03      0.21      15.94 f
+  i_fpu_sub/U3073/Z (MUX2_X1)                   6.40      0.05      0.26      16.21 f
+  i_fpu_sub/add_55_I36_C207_rn/U1_1_2/S (HA_X1)
+                                                1.18      0.03      0.21      16.42 f
+  i_fpu_sub/U3067/Z (MUX2_X1)                   6.51      0.05      0.26      16.68 f
+  i_fpu_sub/add_55_I37_C207_rn/U1_1_2/S (HA_X1)
+                                                1.18      0.03      0.21      16.90 f
+  i_fpu_sub/U3061/Z (MUX2_X1)                   6.48      0.05      0.26      17.16 f
+  i_fpu_sub/add_55_I38_C207_rn/U1_1_2/S (HA_X1)
+                                                1.18      0.03      0.21      17.38 f
+  i_fpu_sub/U3056/Z (MUX2_X1)                   6.49      0.05      0.26      17.64 f
+  i_fpu_sub/add_55_I39_C207_rn/U1_1_2/S (HA_X1)
+                                                1.19      0.03      0.21      17.86 f
+  i_fpu_sub/U3049/Z (MUX2_X1)                   6.48      0.05      0.26      18.12 f
+  i_fpu_sub/add_55_I40_C207_rn/U1_1_2/S (HA_X1)
+                                                1.18      0.03      0.21      18.33 f
+  i_fpu_sub/U3043/Z (MUX2_X1)                   6.51      0.05      0.26      18.60 f
+  i_fpu_sub/add_55_I41_C207_rn/U1_1_2/S (HA_X1)
+                                                1.18      0.03      0.21      18.81 f
+  i_fpu_sub/U3038/Z (MUX2_X1)                   6.40      0.05      0.26      19.08 f
+  i_fpu_sub/add_55_I42_C207_rn/U1_1_2/S (HA_X1)
+                                                1.18      0.03      0.21      19.29 f
+  i_fpu_sub/U3032/Z (MUX2_X1)                   6.51      0.05      0.26      19.55 f
+  i_fpu_sub/add_55_I43_C207_rn/U1_1_2/S (HA_X1)
+                                                1.18      0.03      0.21      19.77 f
+  i_fpu_sub/U3025/Z (MUX2_X1)                   6.48      0.05      0.26      20.03 f
+  i_fpu_sub/add_55_I44_C207_rn/U1_1_2/S (HA_X1)
+                                                1.18      0.03      0.21      20.25 f
+  i_fpu_sub/U3020/Z (MUX2_X1)                   6.49      0.05      0.26      20.51 f
+  i_fpu_sub/add_55_I45_C207_rn/U1_1_2/CO (HA_X1)
+                                                3.57      0.02      0.14      20.65 f
+  i_fpu_sub/add_55_I45_C207_rn/U1_1_3/S (HA_X1)
+                                                1.18      0.03      0.22      20.87 f
+  i_fpu_sub/U3012/Z (MUX2_X1)                   6.48      0.05      0.26      21.13 f
+  i_fpu_sub/add_55_I46_C207_rn/U1_1_3/S (HA_X1)
+                                                1.18      0.03      0.21      21.35 f
+  i_fpu_sub/U3006/Z (MUX2_X1)                   6.42      0.05      0.26      21.61 f
+  i_fpu_sub/add_55_I47_C207_rn/U1_1_3/S (HA_X1)
+                                                1.18      0.03      0.21      21.83 f
+  i_fpu_sub/U3001/Z (MUX2_X1)                   6.48      0.05      0.26      22.09 f
+  i_fpu_sub/add_55_I48_C207_rn/U1_1_3/S (HA_X1)
+                                                1.18      0.03      0.21      22.30 f
+  i_fpu_sub/U2995/Z (MUX2_X1)                   6.50      0.05      0.26      22.57 f
+  i_fpu_sub/add_55_I49_C207_rn/U1_1_3/S (HA_X1)
+                                                1.18      0.03      0.21      22.78 f
+  i_fpu_sub/U2990/Z (MUX2_X1)                   6.50      0.05      0.26      23.05 f
+  i_fpu_sub/add_55_I50_C207_rn/U1_1_3/S (HA_X1)
+                                                1.18      0.03      0.21      23.26 f
+  i_fpu_sub/U2984/Z (MUX2_X1)                   6.49      0.05      0.26      23.53 f
+  i_fpu_sub/add_55_I51_C207_rn/U1_1_3/CO (HA_X1)
+                                                3.57      0.02      0.14      23.67 f
+  i_fpu_sub/add_55_I51_C207_rn/U1_1_4/S (HA_X1)
+                                                1.19      0.03      0.22      23.89 f
+  i_fpu_sub/U2976/Z (MUX2_X1)                   6.45      0.05      0.26      24.15 f
+  i_fpu_sub/add_55_I52_C207_rn/U1_1_4/S (HA_X1)
+                                                1.18      0.03      0.21      24.36 f
+  i_fpu_sub/U2971/Z (MUX2_X1)                   6.49      0.05      0.26      24.63 f
+  i_fpu_sub/add_55_I53_C207_rn/U1_1_4/S (HA_X1)
+                                                1.18      0.03      0.21      24.84 f
+  i_fpu_sub/U2965/Z (MUX2_X1)                   6.39      0.05      0.26      25.11 f
+  i_fpu_sub/add_55_I54_C207_rn/U1_1_4/S (HA_X1)
+                                                1.19      0.03      0.21      25.32 f
+  i_fpu_sub/U2958/Z (MUX2_X1)                   5.09      0.04      0.26      25.57 f
+  i_fpu_sub/add_55_I55_C207_rn/U1_1_4/S (HA_X1)
+                                                1.80      0.03      0.21      25.79 f
+  i_fpu_sub/U1858/ZN (AOI22_X1)                 1.89      0.10      0.17      25.96 r
+  i_fpu_sub/U1856/ZN (OAI211_X1)                1.70      0.10      0.11      26.07 f
+  i_fpu_sub/U1855/ZN (AOI22_X1)                 1.91      0.10      0.19      26.26 r
+  i_fpu_sub/U1854/ZN (OAI221_X1)                1.80      0.05      0.12      26.38 f
+  i_fpu_sub/U1851/ZN (AOI211_X1)                1.90      0.15      0.29      26.67 r
+  i_fpu_sub/U1848/ZN (OAI221_X1)                1.80      0.05      0.13      26.80 f
+  i_fpu_sub/U1845/ZN (AOI211_X1)                1.90      0.15      0.29      27.10 r
+  i_fpu_sub/U1842/ZN (OAI221_X1)                1.80      0.05      0.13      27.22 f
+  i_fpu_sub/U1839/ZN (AOI211_X1)                1.90      0.15      0.30      27.52 r
+  i_fpu_sub/U1836/ZN (OAI221_X1)                1.80      0.05      0.13      27.65 f
+  i_fpu_sub/U1833/ZN (AOI211_X1)                1.95      0.15      0.30      27.94 r
+  i_fpu_sub/U1832/ZN (INV_X1)                   1.82      0.03      0.05      28.00 f
+  i_fpu_sub/U1828/ZN (AOI221_X1)                1.89      0.17      0.29      28.29 r
+  i_fpu_sub/U1826/ZN (OAI211_X1)                1.82      0.08      0.14      28.42 f
+  i_fpu_sub/U1823/ZN (AOI221_X1)                1.89      0.17      0.32      28.74 r
+  i_fpu_sub/U1821/ZN (OAI211_X1)                1.82      0.08      0.14      28.88 f
+  i_fpu_sub/U1817/ZN (AOI221_X1)                1.91      0.17      0.32      29.19 r
+  i_fpu_sub/U1815/ZN (AOI21_X1)                 1.76      0.05      0.08      29.28 f
+  i_fpu_sub/U1814/ZN (AOI221_X1)                1.95      0.17      0.31      29.58 r
+  i_fpu_sub/U1813/ZN (INV_X1)                   1.34      0.03      0.05      29.63 f
+  i_fpu_sub/diff_shift_reg[4]/D (DFF_X1)                  0.03      0.01      29.64 f
+  data arrival time                                                           29.64
+
+  clock CLK (rise edge)                                            30.00      30.00
+  clock network delay (ideal)                                       0.00      30.00
+  i_fpu_sub/diff_shift_reg[4]/CK (DFF_X1)                           0.00      30.00 r
+  library setup time                                               -0.17      29.83
+  data required time                                                          29.83
+  ------------------------------------------------------------------------------------
+  data required time                                                          29.83
+  data arrival time                                                          -29.64
+  ------------------------------------------------------------------------------------
+  slack (MET)                                                                  0.19
+
+
+1
+Loading db file '/CMC/setups/ensc450/SOCLAB/LIBRARIES/NangateOpenCellLibrary_PDKv1_3_v2010_12/Front_End/DB/NangateOpenCellLibrary_slow.db'
+Information: Propagating switching activity (low effort zero delay simulation). (PWR-6)
+Warning: Design has unannotated primary inputs. (PWR-414)
+Warning: Design has unannotated sequential cell outputs. (PWR-415)
+ 
+****************************************
+Report : power
+        -analysis_effort low
+Design : fpu_double
+Version: O-2018.06-SP5
+Date   : Thu Feb  3 22:59:22 2022
+****************************************
+
+
+Library(s) Used:
+
+    NangateOpenCellLibrary (File: /CMC/setups/ensc450/SOCLAB/LIBRARIES/NangateOpenCellLibrary_PDKv1_3_v2010_12/Front_End/DB/NangateOpenCellLibrary_slow.db)
+
+
+Operating Conditions: slow   Library: NangateOpenCellLibrary
+Wire Load Model Mode: top
+
+Design        Wire Load Model            Library
+------------------------------------------------
+fpu_double             5K_hvratio_1_1    NangateOpenCellLibrary
+
+
+Global Operating Voltage = 0.95 
+Power-specific unit information :
+    Voltage Units = 1V
+    Capacitance Units = 1.000000ff
+    Time Units = 1ns
+    Dynamic Power Units = 1uW    (derived from V,C,T units)
+    Leakage Power Units = 1nW
+
+
+  Cell Internal Power  = 888.0153 uW   (96%)
+  Net Switching Power  =  35.6769 uW    (4%)
+                         ---------
+Total Dynamic Power    = 923.6921 uW  (100%)
+
+Cell Leakage Power     = 838.9941 uW
+
+
+                 Internal         Switching           Leakage            Total
+Power Group      Power            Power               Power              Power   (   %    )  Attrs
+--------------------------------------------------------------------------------------------------
+io_pad             0.0000            0.0000            0.0000            0.0000  (   0.00%)
+memory             0.0000            0.0000            0.0000            0.0000  (   0.00%)
+black_box          0.0000            0.0000            0.0000            0.0000  (   0.00%)
+clock_network      0.0000            0.0000            0.0000            0.0000  (   0.00%)
+register         873.5969            3.9316        2.7343e+05        1.1510e+03  (  65.30%)
+sequential         0.0000            0.0000            0.0000            0.0000  (   0.00%)
+combinational     14.4209           31.7457        5.6556e+05          611.7303  (  34.70%)
+--------------------------------------------------------------------------------------------------
+Total            888.0178 uW        35.6773 uW     8.3899e+05 nW     1.7627e+03 uW
+1

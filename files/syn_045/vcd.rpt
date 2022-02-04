@@ -1,0 +1,132 @@
+
+                           Design Compiler Graphical 
+                                 DC Ultra (TM)
+                                  DFTMAX (TM)
+                              Power Compiler (TM)
+                                 DesignWare (R)
+                                 DC Expert (TM)
+                               Design Vision (TM)
+                               HDL Compiler (TM)
+                               VHDL Compiler (TM)
+                                  DFT Compiler
+                               Design Compiler(R)
+
+               Version O-2018.06-SP5 for linux64 - Jan 17, 2019 
+
+                    Copyright (c) 1988 - 2019 Synopsys, Inc.
+   This software and the associated documentation are proprietary to Synopsys,
+ Inc. This software may only be used in accordance with the terms and conditions
+ of a written license agreement with Synopsys, Inc. All other use, reproduction,
+            or distribution of this software is strictly prohibited.
+Initializing...
+# fcampi@sfu.ca Sept 2013
+# Post-Layout Power estimation with parasitics from Cadence & multiple SAIF files
+#
+# VCDs can be SAIF-ied with the command vcd2saif -input file.vcd -output file.vcd.saif -instance /e/uut
+set search_path    "/CMC/setups/ensc450/SOCLAB/LIBRARIES/NangateOpenCellLibrary_PDKv1_3_v2010_12/Front_End/DB"
+/CMC/setups/ensc450/SOCLAB/LIBRARIES/NangateOpenCellLibrary_PDKv1_3_v2010_12/Front_End/DB
+# Target library is the library that is used by the synthesis tool 
+# in order to map the behavioral RTL logic that is being synthesized
+set target_library "NangateOpenCellLibrary_slow.db"
+NangateOpenCellLibrary_slow.db
+# The synthetic library variable specified pre-designed technology independent architectures pre-packaged by Synopsys
+set synthetic_library [list dw_foundation.sldb ]  
+dw_foundation.sldb
+# The link library must contain ALL CELLS used in the design.cOther than the two above, it shall include any IO cell, memory cell, 
+# or other cell/block that the user wishes to include in the design from other sources
+set link_library  [concat $target_library $synthetic_library]
+NangateOpenCellLibrary_slow.db dw_foundation.sldb
+# Post-Synthesis Netlist
+#read_verilog -netlist ./results/fft_core.ref.v
+# Post Layout Netlist : Goodbye Wireload Models  ###################
+read_verilog -netlist ../syn_045/results/fpu_double.ref.v
+Loading db file '/CMC/setups/ensc450/SOCLAB/LIBRARIES/NangateOpenCellLibrary_PDKv1_3_v2010_12/Front_End/DB/NangateOpenCellLibrary_slow.db'
+Loading db file '/CMC/tools/synopsys/syn_vO-2018.06-SP5/libraries/syn/dw_foundation.sldb'
+Loading db file '/CMC/tools/synopsys/syn_vO-2018.06-SP5/libraries/syn/gtech.db'
+Loading db file '/CMC/tools/synopsys/syn_vO-2018.06-SP5/libraries/syn/standard.sldb'
+  Loading link library 'NangateOpenCellLibrary'
+  Loading link library 'gtech'
+Loading verilog file '/ensc/cmc_homedirs/escmc13/ensc450/fpu_work/syn_045/results/fpu_double.ref.v'
+Running DC verilog reader
+Performing 'read' command.
+Compiling source file /ensc/cmc_homedirs/escmc13/ensc450/fpu_work/syn_045/results/fpu_double.ref.v
+Verilog netlist reader completed successfully.
+Current design is now '/ensc/cmc_homedirs/escmc13/ensc450/fpu_work/syn_045/results/fpu_add_DW01_inc_0.db:fpu_add_DW01_inc_0'
+Loaded 46 designs.
+Current design is 'fpu_add_DW01_inc_0'.
+fpu_add_DW01_inc_0 fpu_add_DW01_inc_1 fpu_add_DW01_add_0 fpu_add_DW01_add_1 fpu_add_DW01_sub_0 fpu_add fpu_sub_DW01_sub_1 fpu_sub_DW01_sub_2 fpu_sub_DW_cmp_3 fpu_sub fpu_mul_DW01_add_0 fpu_mul_DW01_add_1 fpu_mul_DW01_add_2 fpu_mul_DW01_add_3 fpu_mul_DW01_add_4 fpu_mul_DW01_add_5 fpu_mul_DW01_add_6 fpu_mul_DW01_add_7 fpu_mul_DW01_add_8 fpu_mul_DW01_sub_2 fpu_mul_DW01_add_10 fpu_mul_DW01_add_9 fpu_mul_DW_mult_uns_9 fpu_mul_DW_mult_uns_8 fpu_mul_DW_mult_uns_7 fpu_mul_DW_mult_uns_6 fpu_mul_DW_mult_uns_5 fpu_mul_DW_mult_uns_4 fpu_mul_DW_mult_uns_3 fpu_mul_DW_mult_uns_2 fpu_mul_DW_mult_uns_1 fpu_mul_DW_mult_uns_0 fpu_mul fpu_div_DW01_sub_0 fpu_div_DW01_sub_1 fpu_div_DW01_add_1 fpu_div_DW01_sub_4 fpu_div_DW01_sub_5 fpu_div_DW01_sub_6 fpu_div_DW_cmp_3 fpu_div fpu_round_DW01_inc_0 fpu_round fpu_exceptions fpu_double_DW01_inc_0 fpu_double
+current_design fpu_double
+Current design is 'fpu_double'.
+{fpu_double}
+#read_parasitics ../BE_045/results/rgb2gray.spef 
+#####################################################################
+#vcd2saif -input ../sim/rgb2gray.vcd -output ../sim/rgb2gray.vcd.saif -instance /e/uut
+# The analysis here can be repeated indefinitely for all VCD/SAIF files available
+set VCDFILES {../sim/fpu_double.vcd.saif}
+../sim/fpu_double.vcd.saif
+foreach file $VCDFILES {
+    read_saif -input $file -instance fpu_double_tb/uut
+    report_power -analysis_effort high 
+}
+Error: No switching activity has been annotated. (PWR-362)
+Information: Updating design information... (UID-85)
+Warning: Design 'fpu_double' contains 1 high-fanout nets. A fanout number of 1000 will be used for delay calculations involving these nets. (TIM-134)
+Information: Propagating switching activity (high effort zero delay simulation). (PWR-6)
+Warning: There is no defined clock in the design. (PWR-80)
+Warning: Design has unannotated primary inputs. (PWR-414)
+Warning: Design has unannotated sequential cell outputs. (PWR-415)
+ 
+****************************************
+Report : power
+        -analysis_effort high
+Design : fpu_double
+Version: O-2018.06-SP5
+Date   : Thu Feb  3 23:07:43 2022
+****************************************
+
+
+Library(s) Used:
+
+    NangateOpenCellLibrary (File: /CMC/setups/ensc450/SOCLAB/LIBRARIES/NangateOpenCellLibrary_PDKv1_3_v2010_12/Front_End/DB/NangateOpenCellLibrary_slow.db)
+
+
+Operating Conditions: slow   Library: NangateOpenCellLibrary
+Wire Load Model Mode: top
+
+Design        Wire Load Model            Library
+------------------------------------------------
+fpu_double             5K_hvratio_1_1    NangateOpenCellLibrary
+
+
+Global Operating Voltage = 0.95 
+Power-specific unit information :
+    Voltage Units = 1V
+    Capacitance Units = 1.000000ff
+    Time Units = 1ns
+    Dynamic Power Units = 1uW    (derived from V,C,T units)
+    Leakage Power Units = 1nW
+
+
+  Cell Internal Power  =   1.5235 mW   (71%)
+  Net Switching Power  = 621.7637 uW   (29%)
+                         ---------
+Total Dynamic Power    =   2.1452 mW  (100%)
+
+Cell Leakage Power     = 837.4570 uW
+
+Information: report_power power group summary does not include estimated clock tree power. (PWR-789)
+
+                 Internal         Switching           Leakage            Total
+Power Group      Power            Power               Power              Power   (   %    )  Attrs
+--------------------------------------------------------------------------------------------------
+io_pad             0.0000            0.0000            0.0000            0.0000  (   0.00%)
+memory             0.0000            0.0000            0.0000            0.0000  (   0.00%)
+black_box          0.0000            0.0000            0.0000            0.0000  (   0.00%)
+clock_network      0.0000            0.0000            0.0000            0.0000  (   0.00%)
+register           0.0000            0.0000            0.0000            0.0000  (   0.00%)
+sequential     1.3496e+03            8.5829        2.7281e+05        1.6309e+03  (  54.68%)
+combinational    173.9039          613.2042        5.6465e+05        1.3517e+03  (  45.32%)
+--------------------------------------------------------------------------------------------------
+Total          1.5235e+03 uW       621.7872 uW     8.3746e+05 nW     2.9827e+03 uW
+#exit
+dc_shell> 
