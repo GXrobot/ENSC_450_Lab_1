@@ -439,7 +439,7 @@ process(clk)
 			enable_signal_c <= '0';
 			enable_signal_d <= '0';
 			enable_signal_e <= '0';
-		elsif (rst = '0') 
+		elsif (rst = '0') then
 			count_nonzero_signal <= count_nonzero;	 
 			count_nonzero_signal_2 <= count_nonzero_signal;
 			enable_signal <= enable_signal_e;
