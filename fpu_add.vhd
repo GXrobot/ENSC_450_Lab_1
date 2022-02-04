@@ -187,7 +187,7 @@ signal   exp_diff_int : integer;
 					else
 						exponent_2 <= exponent;
 					end if;
-				elsif (enable = '0')
+				elsif (enable = '0') then
 					sign <= '0';
 					exponent_a <= (others =>'0');
 					exponent_b <= (others =>'0');
