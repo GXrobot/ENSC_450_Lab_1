@@ -134,15 +134,15 @@
 		fpu_op => fpu_op_reg , sign => sub_sign , diff_2 => diff_out , 
 		exponent_2 => exp_sub_out);
 	
-	i_fpu_mul: fpu_mul 
-		port map (
-		clk => clk , rst => rst , enable => mul_enable , opa => opa_reg , opb => opb_reg , 
-		sign => mul_sign , product_7 => mul_out , exponent_5 => exp_mul_out);	
+	-- i_fpu_mul: fpu_mul 
+	-- 	port map (
+	-- 	clk => clk , rst => rst , enable => mul_enable , opa => opa_reg , opb => opb_reg , 
+	-- 	sign => mul_sign , product_7 => mul_out , exponent_5 => exp_mul_out);	
 	
-	i_fpu_div: fpu_div 
-		port map (
-		clk => clk , rst => rst , enable => div_enable , opa => opa_reg , opb => opb_reg , 
-		sign => div_sign , mantissa_7 => div_out , exponent_out => exp_div_out);	
+	-- i_fpu_div: fpu_div 
+	-- 	port map (
+	-- 	clk => clk , rst => rst , enable => div_enable , opa => opa_reg , opb => opb_reg , 
+	-- 	sign => div_sign , mantissa_7 => div_out , exponent_out => exp_div_out);	
 	
 	i_fpu_round: fpu_round 
 		port map (
