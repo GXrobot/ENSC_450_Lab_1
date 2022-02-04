@@ -93,29 +93,15 @@
 	signal	add_enable_0 : std_logic;
 	signal	add_enable_1 : std_logic;
 	signal	add_enable : std_logic; 
-	signal	sub_enable_0 : std_logic;
-	signal	sub_enable_1 : std_logic;
-	signal	sub_enable : std_logic; 
-	signal	mul_enable : std_logic; 
-	signal	div_enable : std_logic;  
 	signal	except_enable : std_logic;
 	signal	sum_out : std_logic_vector(55 downto 0);
-	signal	diff_out : std_logic_vector(55 downto 0);
 	signal	addsub_out : std_logic_vector(55 downto 0);
-	signal	mul_out : std_logic_vector(55 downto 0);
-	signal	div_out : std_logic_vector(55 downto 0);
 	signal	mantissa_round : std_logic_vector(55 downto 0);
 	signal	exp_add_out : std_logic_vector(10 downto 0);
-	signal	exp_sub_out : std_logic_vector(10 downto 0);
-	signal	exp_mul_out : std_logic_vector(11 downto 0);
-	signal	exp_div_out : std_logic_vector(11 downto 0);
 	signal	exponent_round : std_logic_vector(11 downto 0);
 	signal	exp_addsub : std_logic_vector(11 downto 0);
 	signal	exponent_post_round : std_logic_vector(11 downto 0);
 	signal	add_sign : std_logic;
-	signal	sub_sign : std_logic;
-	signal	mul_sign : std_logic;
-	signal	div_sign : std_logic;
 	signal	addsub_sign : std_logic;
 	signal	sign_round : std_logic;
 	signal	out_round : std_logic_vector(63 downto 0);
@@ -127,22 +113,6 @@
 		port map (
 		clk => clk , rst => rst , enable => add_enable , opa => opa_reg , opb => opb_reg , 
 		sign => add_sign , sum_3 => sum_out , exponent_2 => exp_add_out);
-	
-	i_fpu_sub: fpu_sub 
-		port map (
-		clk => clk , rst => rst , enable => sub_enable , opa => opa_reg , opb => opb_reg , 
-		fpu_op => fpu_op_reg , sign => sub_sign , diff_2 => diff_out , 
-		exponent_2 => exp_sub_out);
-	
-	i_fpu_mul: fpu_mul 
-		port map (
-		clk => clk , rst => rst , enable => mul_enable , opa => opa_reg , opb => opb_reg , 
-		sign => mul_sign , product_7 => mul_out , exponent_5 => exp_mul_out);	
-	
-	i_fpu_div: fpu_div 
-		port map (
-		clk => clk , rst => rst , enable => div_enable , opa => opa_reg , opb => opb_reg , 
-		sign => div_sign , mantissa_7 => div_out , exponent_out => exp_div_out);	
 	
 	i_fpu_round: fpu_round 
 		port map (
@@ -175,18 +145,6 @@
 		else
 			add_enable_1 <= '0';
 		end if;
-		--sub_enable_0  <= '1' when (fpu_op_reg = "000") and (opa_reg(63) xor opb_reg(63)) = '1' else '0';
-		if (fpu_op_reg = "000" and (opa_reg(63) xor opb_reg(63)) = '1') then
-			sub_enable_0 <= '1';
-		else
-			sub_enable_0 <= '0';
-		end if;
-		--sub_enable_1  <= '1' when (fpu_op_reg = "001") and (opa_reg(63) xor opb_reg(63)) = '0' else '0';
-		if (fpu_op_reg = "001" and (opa_reg(63) xor opb_reg(63)) = '0') then
-			sub_enable_1 <= '1';
-		else
-			sub_enable_1 <= '0';
-		end if;
 	end process;
 		
 	process(clk)
@@ -203,21 +161,6 @@
 				exponent_round <= exp_addsub;
 				sign_round <= addsub_sign;
 				count_cycles <= "0010100"; -- 20
-			elsif (fpu_op_reg = "001") then -- subtract
-				mantissa_round <= addsub_out;
-				exponent_round <= exp_addsub;
-				sign_round <= addsub_sign;
-				count_cycles <= "0010101"; -- 21
-			elsif (fpu_op_reg = "010") then
-				mantissa_round <= mul_out;
-				exponent_round <= exp_mul_out;
-				sign_round <= mul_sign;
-				count_cycles <= "0011000"; -- 24	
-			elsif (fpu_op_reg = "011") then
-				mantissa_round <= div_out;
-				exponent_round <= exp_div_out;
-				sign_round <= div_sign;
-				count_cycles <= "1000111"; -- 71
 			else
 				mantissa_round <= (others =>'0');
 				exponent_round <= (others =>'0');
@@ -235,9 +178,6 @@
 	if rising_edge(clk) then
 		if (rst = '1') then
 			add_enable <= '0';
-			sub_enable <= '0';
-			mul_enable <= '0';
-			div_enable <= '0';
 			addsub_out <= (others =>'0');
 			addsub_sign <= '0';
 			exp_addsub <= (others =>'0');
@@ -247,21 +187,6 @@
 			else
 				add_enable <= '0';
 			end if;
-			if ((sub_enable_0 = '1' or sub_enable_1 = '1') and op_enable = '1') then
-				sub_enable <= '1';
-			else
-				sub_enable <= '0';
-			end if;
-			if fpu_op_reg = "010" and op_enable = '1' then
-				mul_enable <= '1';
-			else
-				mul_enable <= '0';
-			end if;
-			if fpu_op_reg = "011" and op_enable = '1' and enable_reg_3 = '1' then
-				div_enable <= '1';
-			else
-				div_enable <= '0';
-			end if;  -- div_enable needs to be high for two clock cycles
 			if add_enable = '1' then
 				addsub_out <= sum_out;
 				addsub_sign <= add_sign;
