@@ -103,7 +103,7 @@
 		subtra_shift_2 <= "0000000000000000000000000000000000000000000000000000001";
 		in_norm_out_denorm <= or_reduce(exponent_large) and not or_reduce(exponent);
 		--fpu_op_add <= '1' when fpu_op = "000" else '0';
-		if (fpu_op = '000') then
+		if (fpu_op = "000") then
 			fpu_op_add <= '1';
 		else
 			fpu_op_add <= '0';

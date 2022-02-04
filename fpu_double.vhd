@@ -165,7 +165,7 @@
 		begin
 		--add_enable_0  <= '1' when fpu_op_reg = "000" and (opa_reg(63) xor opb_reg(63)) = '0' else '0';
 		if (fpu_op_reg = "000" and (opa_reg(63) xor opb_reg(63)) = '0') then
-			add_enable_0 <= '1'
+			add_enable_0 <= '1';
 		else
 			add_enable_0 <= '0';
 		end if;

@@ -143,7 +143,12 @@
 		exponent_a  <=  '0' & expon_a;
 		exponent_b  <=  '0' & expon_b;
 		dividend_denorm <= dividend_a_shifted & '0';
-		dividend_1  <= "01" & dividend_a when a_is_norm = '1' else '0' & dividend_denorm;
+		--dividend_1  <= "01" & dividend_a when a_is_norm = '1' else '0' & dividend_denorm;
+		if (a_is_norm = '1') then
+			dividend_1 <= "01" & dividend_a;
+		else
+			dividend_1 <= '0' & dividend_norm;
+		end if;
 		divisor_denorm  <= divisor_b_shifted & '0';
 		divisor_1  <= "01" & divisor_b when b_is_norm = '1' else '0' & divisor_denorm;
 		count_nonzero  <= '0' when count_index = "000000" else '1';	  
