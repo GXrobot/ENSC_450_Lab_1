@@ -122,7 +122,7 @@ fpu_op <= "000";
 rmode <= "10";
 wait for 20ns;
 enable <= '0';
-wait for 800 ns;
+wait for 1000 ns;
 --Output:0.000000000000000e+000
 -- out_fp = 0000000000000000
 --inputA:-8.8899000000e+002
@@ -134,7 +134,7 @@ fpu_op <= "000";
 rmode <= "11";
 wait for 20ns;
 enable <= '0';
-wait for 800 ns;
+wait for 1000 ns;
 --Output:-1.000098000000000e+002
 -- out_fp = C05900A0902DE010
 --inputA:1.9500000000e-308
@@ -146,7 +146,7 @@ fpu_op <= "000";
 rmode <= "10";
 wait for 20ns;
 enable <= '0';
-wait for 800 ns;
+wait for 1000 ns;
 --Output:3.830000000000000e-308
 -- out_fp = 001B8A689DE85A6C
 --inputA:-9.9000000000e-002
@@ -158,7 +158,7 @@ fpu_op <= "000";
 rmode <= "11";
 wait for 20ns;
 enable <= '0';
-wait for 800 ns;
+wait for 1000 ns;
 --Output:4.012100000000000e+001
 -- out_fp = 40440F7CED916872
 --inputA:9.0770000000e+001
@@ -170,7 +170,7 @@ fpu_op <= "000";
 rmode <= "00";
 wait for 20ns;
 enable <= '0';
-wait for 800 ns;
+wait for 1000 ns;
 --Output:7.044000000000000e+001
 -- out_fp = 40519C28F5C28F5C
 --inputA:9.0000000000e+034
@@ -182,7 +182,7 @@ fpu_op <= "000";
 rmode <= "10";
 wait for 20ns;
 enable <= '0';
-wait for 800 ns;
+wait for 1000 ns;
 --Output:9.000000000040000e+034
 -- out_fp = 47315557B41A1A76
 --inputA:4.0000000000e+080
@@ -194,7 +194,7 @@ fpu_op <= "000";
 rmode <= "10";
 wait for 20ns;
 enable <= '0';
-wait for 800 ns;
+wait for 1000 ns;
 --Output:4.000000000000001e+080
 -- out_fp = 50AAFCEF51F0FB60
 --inputA:9.0000000000e-311
@@ -206,7 +206,7 @@ fpu_op <= "000";
 rmode <= "00";
 wait for 20ns;
 enable <= '0';
-wait for 800 ns;
+wait for 1000 ns;
 --Output:1.700000000000010e-310
 -- out_fp = 00001F4B537320E3
 --inputA:6.1000000000e+000
@@ -218,7 +218,7 @@ fpu_op <= "000";
 rmode <= "10";
 wait for 20ns;
 enable <= '0';
-wait for 800 ns;
+wait for 1000 ns;
 --Output:9.999999999994458e-004
 -- out_fp = 3F50624DD2F1A000
 --inputA:-9.0000000000e+088
@@ -230,7 +230,7 @@ fpu_op <= "000";
 rmode <= "00";
 wait for 20ns;
 enable <= '0';
-wait for 800 ns;
+wait for 1000 ns;
 --Output:-8.999600000000000e+088
 -- out_fp = D2669EBEB27088F3
 --inputA:-5.0000000000e-309
@@ -242,7 +242,7 @@ fpu_op <= "000";
 rmode <= "11";
 wait for 20ns;
 enable <= '0';
-wait for 800 ns;
+wait for 1000 ns;
 --Output:-4.600000000000001e-309
 -- out_fp = 80034EC90E495BBD
 --inputA:4.5570000000e+002
@@ -254,7 +254,7 @@ fpu_op <= "000";
 rmode <= "01";
 wait for 20ns;
 enable <= '0';
-wait for 800 ns;
+wait for 1000 ns;
 --Output:3.878610000000000e+003
 -- out_fp = 40AE4D3851EB851E
 --inputA:3.9800000000e+000
@@ -266,7 +266,7 @@ fpu_op <= "000";
 rmode <= "01";
 wait for 20ns;
 enable <= '0';
-wait for 800 ns;
+wait for 1000 ns;
 --Output:7.750000000000000e+000
 -- out_fp = 401F000000000000
 
