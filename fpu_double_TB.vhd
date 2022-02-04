@@ -110,9 +110,9 @@ begin
 
 
 
-	rst <= '1';
-    wait for 20 ns; 
-	rst <= '0';
+rst <= '1';
+wait for 20 ns; 
+rst <= '0';
 --inputA:4.0000000000e+000
 --inputB:-4.0000000000e+000
 enable <= '1';

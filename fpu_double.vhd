@@ -157,12 +157,16 @@
 		in_except => out_round ,  exponent_in => exponent_post_round , 
 		mantissa_in => mantissa_round(1 downto 0) , fpu_op => fpu_op_reg , out_fp => out_except , 
 		ex_enable => except_enable , underflow => underflow_0 , overflow => overflow_0 , 
-		inexact => inexact_0 , exception => exception_0 , invalid => invalid_0);
-			
-	count_busy <= '1' when (count_ready <= count_cycles) else '0';	 
+		inexact => inexact_0 , exception => exception_0 , invalid => invalid_0); 
 
 	process(fpu_op_reg, opa_reg, opb_reg)
 		begin
+		--count_busy <= '1' when (count_ready <= count_cycles) else '0';
+		if (count_ready <= count_cycles) then
+			count_busy <= '1';
+		else
+			count_busy <= '0';
+		end if;
 		--add_enable_0  <= '1' when fpu_op_reg = "000" and (opa_reg(63) xor opb_reg(63)) = '0' else '0';
 		if (fpu_op_reg = "000" and (opa_reg(63) xor opb_reg(63)) = '0') then
 			add_enable_0 <= '1';
